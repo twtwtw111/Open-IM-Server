@@ -143,6 +143,16 @@ install.coscli:
 install.coscmd:
 	@if which pip &>/dev/null; then pip install coscmd; else pip3 install coscmd; fi
 
+## install.delve: Install delve, used to debug go program
+.PHONY: install.delve
+install.delve:
+	@$(GO) install github.com/go-delve/delve/cmd/dlv@latest
+
+## install.air: Install air, used to hot reload go program
+.PHONY: install.air
+install.air:
+	@$(GO) install github.com/cosmtrek/air@latest
+
 ## install.gvm: Install gvm, gvm is a Go version manager, built on top of the official go tool.
 # github: https://github.com/moovweb/gvm
 .PHONY: install.gvm
