@@ -120,6 +120,42 @@ func groupIsMuted(groupID string) (bool, error) {
 	return false, nil
 }
 
+//群权限控制
+func groupPermissionAllow(groupID string,field string) (bool,error){
+	groupInfo, err := rocksCache.GetGroupInfoFromCache(groupID)
+	if err != nil {
+		return false, utils.Wrap(err, "GetGroupInfoFromCache failed")
+	}
+
+	switch field {
+	case "image":
+		if groupInfo.AllowSendImage == 1 {
+			return true,nil
+		}
+		return false,nil
+	case "video":
+		if groupInfo.AllowSendVideo == 1 {
+			return true,nil
+		}
+		return false,nil
+	case "revoke":
+		if groupInfo.AllowRevokeMsg == 1 {
+			return true,nil
+		}
+		return false,nil
+	case "nickname":
+		if groupInfo.AllowModifyNickname == 1 {
+			return true,nil
+		}
+		return false,nil
+	default:
+		return true,nil
+
+	}
+}
+
+
+
 func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, string, []string) {
 	switch data.MsgData.SessionType {
 	case constant.SingleChatType:
@@ -215,11 +251,58 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 			return false, 225, "group id muted", nil
 		}
 		return true, 0, "", userIDList
+
+		//允许发送图片
+		isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"image")
+
+		if err != nil {
+			errMsg := data.OperationID + err.Error()
+			return false, 223, errMsg, nil
+		}
+		if groupPermissionAllow == false && isAdmin != false {
+			return false, 226, "group is not allowed sending image", nil
+		}
+
+		//允许发送视频
+		isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"video")
+
+		if err != nil {
+			errMsg := data.OperationID + err.Error()
+			return false, 223, errMsg, nil
+		}
+		if groupPermissionAllow == false && isAdmin != false {
+			return false, 227, "group is not allowed sending video", nil
+		}
+		// //允许撤回消息
+		// isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"revoke")
+
+		// if err != nil {
+		// 	errMsg := data.OperationID + err.Error()
+		// 	return false, 223, errMsg, nil
+		// }
+		// if groupPermissionAllow == false {
+		// 	return false, 228, "group is not allowed revoking msg", nil
+		// }
+
+		// isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"nickname")
+
+		// if err != nil {
+		// 	errMsg := data.OperationID + err.Error()
+		// 	return false, 223, errMsg, nil
+		// }
+		// if groupPermissionAllow == false {
+		// 	return false, 228, "group is not allowed modify nickname", nil
+		// }
+		
+
 	case constant.SuperGroupChatType:
 		groupInfo, err := rocksCache.GetGroupInfoFromCache(data.MsgData.GroupID)
 		if err != nil {
 			return false, 201, err.Error(), nil
 		}
+		//撤回消息在这里检测吗
+
+
 
 		if data.MsgData.ContentType == constant.AdvancedRevoke {
 			revokeMessage := new(MessageRevoked)
