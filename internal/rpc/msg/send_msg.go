@@ -250,7 +250,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 		if isMute {
 			return false, 225, "group id muted", nil
 		}
-		return true, 0, "", userIDList
+		
 
 		//允许发送图片
 		isGroupPermissionAllow,err := groupPermissionAllow(data.MsgData.GroupID,"image")
@@ -273,6 +273,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 		if isGroupPermissionAllow == false && isAdmin != false {
 			return false, 227, "group is not allowed sending video", nil
 		}
+		return true, 0, "", userIDList
 		// //允许撤回消息
 		// isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"revoke")
 
