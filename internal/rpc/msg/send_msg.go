@@ -253,7 +253,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 		return true, 0, "", userIDList
 
 		//允许发送图片
-		isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"image")
+		isGroupPermissionAllow,err := groupPermissionAllow(data.MsgData.GroupID,"image")
 
 		if err != nil {
 			errMsg := data.OperationID + err.Error()
@@ -264,7 +264,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 		}
 
 		//允许发送视频
-		isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"video")
+		isGroupPermissionAllow,err := groupPermissionAllow(data.MsgData.GroupID,"video")
 
 		if err != nil {
 			errMsg := data.OperationID + err.Error()
