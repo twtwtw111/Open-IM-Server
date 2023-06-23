@@ -259,7 +259,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 			errMsg := data.OperationID + err.Error()
 			return false, 223, errMsg, nil
 		}
-		if groupPermissionAllow == false && isAdmin != false {
+		if isGroupPermissionAllow == false && isAdmin != false {
 			return false, 226, "group is not allowed sending image", nil
 		}
 
@@ -270,7 +270,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 			errMsg := data.OperationID + err.Error()
 			return false, 223, errMsg, nil
 		}
-		if groupPermissionAllow == false && isAdmin != false {
+		if isGroupPermissionAllow == false && isAdmin != false {
 			return false, 227, "group is not allowed sending video", nil
 		}
 		// //允许撤回消息
