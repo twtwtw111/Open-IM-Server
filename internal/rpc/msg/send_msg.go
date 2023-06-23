@@ -251,49 +251,14 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 			return false, 225, "group id muted", nil
 		}
 		
-
-		//允许发送图片
-		isGroupPermissionAllow,err := groupPermissionAllow(data.MsgData.GroupID,"image")
-
-		if err != nil {
-			errMsg := data.OperationID + err.Error()
-			return false, 223, errMsg, nil
-		}
-		if isGroupPermissionAllow == false && isAdmin != false {
-			return false, 226, "group is not allowed sending image", nil
+		//不允许发送非文字消息 不是群组 是群消息且消息类型不是文字,发送id 不等于群组id
+		if  isAdmin != true && data.MsgData.ContentType != 101 {
+			return false, 226, "group is not allowed sending image,video or file", nil
 		}
 
-		//允许发送视频
-		isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"video")
-
-		if err != nil {
-			errMsg := data.OperationID + err.Error()
-			return false, 223, errMsg, nil
-		}
-		if isGroupPermissionAllow == false && isAdmin != false {
-			return false, 227, "group is not allowed sending video", nil
-		}
+	
 		return true, 0, "", userIDList
-		// //允许撤回消息
-		// isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"revoke")
-
-		// if err != nil {
-		// 	errMsg := data.OperationID + err.Error()
-		// 	return false, 223, errMsg, nil
-		// }
-		// if groupPermissionAllow == false {
-		// 	return false, 228, "group is not allowed revoking msg", nil
-		// }
-
-		// isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"nickname")
-
-		// if err != nil {
-		// 	errMsg := data.OperationID + err.Error()
-		// 	return false, 223, errMsg, nil
-		// }
-		// if groupPermissionAllow == false {
-		// 	return false, 228, "group is not allowed modify nickname", nil
-		// }
+		
 		
 
 	case constant.SuperGroupChatType:
@@ -306,13 +271,31 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 
 
 		if data.MsgData.ContentType == constant.AdvancedRevoke {
+
+
+			
+
+			
 			revokeMessage := new(MessageRevoked)
+
+			log.Debug(data.OperationID, "chehuixiaoxi", revokeMessage)
+
 			err := utils.JsonStringToStruct(string(data.MsgData.Content), revokeMessage)
 			if err != nil {
 				log.Error(data.OperationID, "json unmarshal err:", err.Error())
 				return false, 201, err.Error(), nil
 			}
 			log.Debug(data.OperationID, "revoke message is", *revokeMessage)
+
+
+
+			//如果这条消息的撤回人id 不等于 群主。
+			if revokeMessage.RevokerID != groupInfo.CreatorUserID {
+				return false, 201, "can not revoke msg", nil
+			}
+
+
+
 			if revokeMessage.RevokerID != revokeMessage.SourceMessageSendID {
 				req := pbChat.GetSuperGroupMsgReq{OperationID: data.OperationID, Seq: revokeMessage.Seq, GroupID: data.MsgData.GroupID}
 				resp, err := rpc.GetSuperGroupMsg(context.Background(), &req)
