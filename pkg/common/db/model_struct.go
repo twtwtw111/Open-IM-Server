@@ -100,6 +100,10 @@ type Group struct {
 	NeedVerification       int32     `gorm:"column:need_verification"`
 	LookMemberInfo         int32     `gorm:"column:look_member_info" json:"lookMemberInfo"`
 	ApplyMemberFriend      int32     `gorm:"column:apply_member_friend" json:"applyMemberFriend"`
+	AllowSendImage		   int32	 `gorm:"column:allow_send_image" json:"allowSendImage"`
+	AllowSendVideo		   int32	 `gorm:"column:allow_send_video" json:"allowSendVideo"`
+	AllowRevokeMsg		   int32	 `gorm:"column:allow_revoke_msg" json:"allowRevokeMsg"`
+	AllowModifyNickname	   int32	 `gorm:"column:allow_modify_nickname" json:"allowModifyNickname"`
 	NotificationUpdateTime time.Time `gorm:"column:notification_update_time"`
 	NotificationUserID     string    `gorm:"column:notification_user_id;size:64"`
 }
