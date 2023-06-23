@@ -884,23 +884,23 @@ func argsHandle(params *api.SetGroupInfoReq, req *rpc.SetGroupInfoReq) {
 		req.GroupInfoForSet.ApplyMemberFriend = &wrappers.Int32Value{Value: *params.ApplyMemberFriend}
 		log.NewInfo(req.OperationID, "ApplyMemberFriend ", req.GroupInfoForSet.ApplyMemberFriend)
 	}
-	if params.AllowSendImage != nil {
-		req.GroupInfoForSet.AllowSendImage = &wrappers.Int32Value{Value: *params.AllowSendImage}
-		log.NewInfo(req.OperationID, "AllowSendImage", req.GroupInfoForSet.AllowSendImage)
-	}
-	if params.AllowSendVideo != nil {
-		req.GroupInfoForSet.AllowSendVideo = &wrappers.Int32Value{Value: *params.AllowSendVideo}
-		log.NewInfo(req.OperationID, "AllowSendVideo", req.GroupInfoForSet.AllowSendVideo)
-	}
-	if params.AllowRevokeMsg != nil {
-		req.GroupInfoForSet.AllowRevokeMsg = &wrappers.Int32Value{Value: *params.AllowRevokeMsg}
-		log.NewInfo(req.OperationID, "AllowRevokeMsg", req.GroupInfoForSet.AllowRevokeMsg)
-	}
+	// if params.AllowSendImage != nil {
+	// 	req.GroupInfoForSet.AllowSendImage = &wrappers.Int32Value{Value: *params.AllowSendImage}
+	// 	log.NewInfo(req.OperationID, "AllowSendImage", req.GroupInfoForSet.AllowSendImage)
+	// }
+	// if params.AllowSendVideo != nil {
+	// 	req.GroupInfoForSet.AllowSendVideo = &wrappers.Int32Value{Value: *params.AllowSendVideo}
+	// 	log.NewInfo(req.OperationID, "AllowSendVideo", req.GroupInfoForSet.AllowSendVideo)
+	// }
+	// if params.AllowRevokeMsg != nil {
+	// 	req.GroupInfoForSet.AllowRevokeMsg = &wrappers.Int32Value{Value: *params.AllowRevokeMsg}
+	// 	log.NewInfo(req.OperationID, "AllowRevokeMsg", req.GroupInfoForSet.AllowRevokeMsg)
+	// }
 
-	if params.AllowModifyNickname != nil {
-		req.GroupInfoForSet.AllowModifyNickname = &wrappers.Int32Value{Value: *params.AllowModifyNickname}
-		log.NewInfo(req.OperationID, "AllowModifyNickname", req.GroupInfoForSet.AllowModifyNickname)
-	}
+	// if params.AllowModifyNickname != nil {
+	// 	req.GroupInfoForSet.AllowModifyNickname = &wrappers.Int32Value{Value: *params.AllowModifyNickname}
+	// 	log.NewInfo(req.OperationID, "AllowModifyNickname", req.GroupInfoForSet.AllowModifyNickname)
+	// }
 }
 
 // @Summary 转让群主
@@ -1240,12 +1240,12 @@ func SetGroupMemberNickname(c *gin.Context) {
 	utils.CopyStructFields(req, &params)
 	
 	//是否允许修改群昵称
-	groupInfo, err := rocksCache.GetGroupInfoFromCache(req.groupID)
-	groupMemberInfo, err := rocksCache.GetGroupMemberInfoFromCache(req.groupID, req.userID)
-	if groupInfo.AllowModifyNickname == 0  && groupMemberInfo.RoleLevel < constant.GroupOrdinaryUsers{
-		c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": "not allow modify nickname"})
-		return
-	}
+	// groupInfo, err := rocksCache.GetGroupInfoFromCache(req.groupID)
+	// groupMemberInfo, err := rocksCache.GetGroupMemberInfoFromCache(req.groupID, req.userID)
+	// if groupInfo.AllowModifyNickname == 0  && groupMemberInfo.RoleLevel < constant.GroupOrdinaryUsers{
+	// 	c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": "not allow modify nickname"})
+	// 	return
+	// }
 
 	var ok bool
 	var errInfo string
