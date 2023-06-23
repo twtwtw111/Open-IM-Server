@@ -11,7 +11,6 @@ import (
 	open_im_sdk "Open_IM/pkg/proto/sdk_ws"
 	"Open_IM/pkg/utils"
 	"context"
-	rocksCache "Open_IM/pkg/common/db/rocks_cache"
 	"github.com/golang/protobuf/ptypes/wrappers"
 	"google.golang.org/grpc"
 
@@ -884,23 +883,23 @@ func argsHandle(params *api.SetGroupInfoReq, req *rpc.SetGroupInfoReq) {
 		req.GroupInfoForSet.ApplyMemberFriend = &wrappers.Int32Value{Value: *params.ApplyMemberFriend}
 		log.NewInfo(req.OperationID, "ApplyMemberFriend ", req.GroupInfoForSet.ApplyMemberFriend)
 	}
-	// if params.AllowSendImage != nil {
-	// 	req.GroupInfoForSet.AllowSendImage = &wrappers.Int32Value{Value: *params.AllowSendImage}
-	// 	log.NewInfo(req.OperationID, "AllowSendImage", req.GroupInfoForSet.AllowSendImage)
-	// }
-	// if params.AllowSendVideo != nil {
-	// 	req.GroupInfoForSet.AllowSendVideo = &wrappers.Int32Value{Value: *params.AllowSendVideo}
-	// 	log.NewInfo(req.OperationID, "AllowSendVideo", req.GroupInfoForSet.AllowSendVideo)
-	// }
-	// if params.AllowRevokeMsg != nil {
-	// 	req.GroupInfoForSet.AllowRevokeMsg = &wrappers.Int32Value{Value: *params.AllowRevokeMsg}
-	// 	log.NewInfo(req.OperationID, "AllowRevokeMsg", req.GroupInfoForSet.AllowRevokeMsg)
-	// }
+	if params.AllowSendImage != nil {
+		req.GroupInfoForSet.AllowSendImage = &wrappers.Int32Value{Value: *params.AllowSendImage}
+		log.NewInfo(req.OperationID, "AllowSendImage", req.GroupInfoForSet.AllowSendImage)
+	}
+	if params.AllowSendVideo != nil {
+		req.GroupInfoForSet.AllowSendVideo = &wrappers.Int32Value{Value: *params.AllowSendVideo}
+		log.NewInfo(req.OperationID, "AllowSendVideo", req.GroupInfoForSet.AllowSendVideo)
+	}
+	if params.AllowRevokeMsg != nil {
+		req.GroupInfoForSet.AllowRevokeMsg = &wrappers.Int32Value{Value: *params.AllowRevokeMsg}
+		log.NewInfo(req.OperationID, "AllowRevokeMsg", req.GroupInfoForSet.AllowRevokeMsg)
+	}
 
-	// if params.AllowModifyNickname != nil {
-	// 	req.GroupInfoForSet.AllowModifyNickname = &wrappers.Int32Value{Value: *params.AllowModifyNickname}
-	// 	log.NewInfo(req.OperationID, "AllowModifyNickname", req.GroupInfoForSet.AllowModifyNickname)
-	// }
+	if params.AllowModifyNickname != nil {
+		req.GroupInfoForSet.AllowModifyNickname = &wrappers.Int32Value{Value: *params.AllowModifyNickname}
+		log.NewInfo(req.OperationID, "AllowModifyNickname", req.GroupInfoForSet.AllowModifyNickname)
+	}
 }
 
 // @Summary 转让群主

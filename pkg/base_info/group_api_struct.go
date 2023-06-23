@@ -215,6 +215,10 @@ type SetGroupInfoReq struct {
 	NeedVerification  *int32 `json:"needVerification"`
 	LookMemberInfo    *int32 `json:"lookMemberInfo"`
 	ApplyMemberFriend *int32 `json:"applyMemberFriend"`
+	AllowSendImage    *int32 `json:"allowSendImage"`
+	AllowSendVideo    *int32 `json:"allowSendVideo"` 
+	AllowRevokeMsg    *int32 `json:"allowRevokeMsg"`   
+	AllowModifyNickname   *int32 `json:"allowModifyNickname"`   
 }
 
 type SetGroupInfoResp struct {

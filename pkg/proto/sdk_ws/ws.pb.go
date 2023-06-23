@@ -195,6 +195,10 @@ type GroupInfoForSet struct {
 	NeedVerification     *wrapperspb.Int32Value `protobuf:"bytes,7,opt,name=needVerification" json:"needVerification,omitempty"`
 	LookMemberInfo       *wrapperspb.Int32Value `protobuf:"bytes,8,opt,name=lookMemberInfo" json:"lookMemberInfo,omitempty"`
 	ApplyMemberFriend    *wrapperspb.Int32Value `protobuf:"bytes,9,opt,name=applyMemberFriend" json:"applyMemberFriend,omitempty"`
+	AllowSendImage    *wrapperspb.Int32Value `protobuf:"bytes,9,opt,name=allowSendImage" json:"allowSendImage,omitempty"`
+	AllowSendVideo    *wrapperspb.Int32Value `protobuf:"bytes,9,opt,name=allowSendVideo" json:"allowSendVideo,omitempty"`
+	AllowRevokeMsg    *wrapperspb.Int32Value `protobuf:"bytes,9,opt,name=allowRevokeMsg" json:"allowRevokeMsg,omitempty"`
+	AllowModifyNickname    *wrapperspb.Int32Value `protobuf:"bytes,9,opt,name=allowModifyNickname" json:"allowModifyNickname,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
 	XXX_unrecognized     []byte                 `json:"-"`
 	XXX_sizecache        int32                  `json:"-"`
