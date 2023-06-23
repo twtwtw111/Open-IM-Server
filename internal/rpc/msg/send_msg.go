@@ -264,7 +264,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 		}
 
 		//允许发送视频
-		isGroupPermissionAllow,err := groupPermissionAllow(data.MsgData.GroupID,"video")
+		isGroupPermissionAllow,err = groupPermissionAllow(data.MsgData.GroupID,"video")
 
 		if err != nil {
 			errMsg := data.OperationID + err.Error()
