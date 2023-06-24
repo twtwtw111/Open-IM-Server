@@ -286,7 +286,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 
 
 
-			//如果这条消息的撤回人id 不等于 群主。
+			//如果这个人不是管理员。
 			if isAdmin == false {
 				return false, 201, "can not revoke msg", nil
 			}
