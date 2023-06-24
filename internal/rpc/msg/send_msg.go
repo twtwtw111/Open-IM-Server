@@ -287,6 +287,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 
 
 			//如果这个人不是管理员。
+			isMute, isAdmin, err := userIsMuteAndIsAdminInGroup(data.MsgData.GroupID, data.MsgData.SendID)
 			if isAdmin == false {
 				return false, 201, "can not revoke msg", nil
 			}
