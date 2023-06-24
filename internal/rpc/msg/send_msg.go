@@ -266,9 +266,6 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 		if err != nil {
 			return false, 201, err.Error(), nil
 		}
-		//撤回消息在这里检测吗
-
-
 
 		if data.MsgData.ContentType == constant.AdvancedRevoke {
 
@@ -290,7 +287,7 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 
 
 			//如果这条消息的撤回人id 不等于 群主。
-			if revokeMessage.RevokerID != groupInfo.CreatorUserID {
+			if isAdmin == false {
 				return false, 201, "can not revoke msg", nil
 			}
 
