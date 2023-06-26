@@ -1371,7 +1371,7 @@ func (s *groupServer) SetGroupInfo(ctx context.Context, req *pbGroup.SetGroupInf
 	}
 	log.NewInfo(req.OperationID, "SetGroupInfo rpc return ", pbGroup.SetGroupInfoResp{CommonResp: &pbGroup.CommonResp{}})
 	if changedType != 0 {
-		chat.GroupInfoSetNotification(req.OperationID, req.OpUserID, req.GroupInfoForSet.GroupID, groupName, notification,
+		chat.GroupInfoSetNotification(req.OperationID, req.OpUserID, req.GroupInfoForSet.GroupID, groupName, streamUrl,notification,
 			introduction, faceURL, req.GroupInfoForSet.NeedVerification, req.GroupInfoForSet.ApplyMemberFriend, req.GroupInfoForSet.LookMemberInfo)
 	}
 	if req.GroupInfoForSet.Notification != "" {
