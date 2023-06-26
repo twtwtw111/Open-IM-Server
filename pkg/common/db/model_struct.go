@@ -104,6 +104,7 @@ type Group struct {
 	AllowSendVideo		   int32	 `gorm:"column:allow_send_video" json:"allowSendVideo"`
 	AllowRevokeMsg		   int32	 `gorm:"column:allow_revoke_msg" json:"allowRevokeMsg"`
 	AllowModifyNickname	   int32	 `gorm:"column:allow_modify_nickname" json:"allowModifyNickname"`
+	StreamUrl      string     `gorm:"column:stream_url" json:"streamUrl"`
 	NotificationUpdateTime time.Time `gorm:"column:notification_update_time"`
 	NotificationUserID     string    `gorm:"column:notification_user_id;size:64"`
 }

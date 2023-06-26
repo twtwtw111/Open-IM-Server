@@ -218,7 +218,8 @@ type SetGroupInfoReq struct {
 	AllowSendImage    *int32 `json:"allowSendImage"`
 	AllowSendVideo    *int32 `json:"allowSendVideo"` 
 	AllowRevokeMsg    *int32 `json:"allowRevokeMsg"`   
-	AllowModifyNickname   *int32 `json:"allowModifyNickname"`   
+	AllowModifyNickname   *int32 `json:"allowModifyNickname"`
+	StreamUrl   string `json:"StreamUrl"`
 }
 
 type SetGroupInfoResp struct {
