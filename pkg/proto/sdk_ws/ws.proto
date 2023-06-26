@@ -25,6 +25,7 @@ message GroupInfo{
   int32 applyMemberFriend = 15;
   uint32 notificationUpdateTime = 16;
   string notificationUserID = 17;
+  string streamUrl = 18;
 }
 
 message GroupInfoForSet{
@@ -37,6 +38,7 @@ message GroupInfoForSet{
   google.protobuf.Int32Value needVerification = 7;
   google.protobuf.Int32Value lookMemberInfo = 8;
   google.protobuf.Int32Value applyMemberFriend = 9;
+  string streamUrl = 18;
 }
 
 
