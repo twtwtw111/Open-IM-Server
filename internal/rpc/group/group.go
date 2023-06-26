@@ -1299,9 +1299,15 @@ func (s *groupServer) SetGroupInfo(ctx context.Context, req *pbGroup.SetGroupInf
 	notification := ""
 	introduction := ""
 	faceURL := ""
+	streamUrl  :=""
+
 	if group.GroupName != req.GroupInfoForSet.GroupName && req.GroupInfoForSet.GroupName != "" {
 		changedType = 1
 		groupName = req.GroupInfoForSet.GroupName
+	}
+	if group.StreamUrl != req.GroupInfoForSet.StreamUrl && req.GroupInfoForSet.StreamUrl != "" {
+		changedType = 1
+		streamUrl = req.GroupInfoForSet.StreamUrl
 	}
 	if group.Notification != req.GroupInfoForSet.Notification && req.GroupInfoForSet.Notification != "" {
 		changedType = changedType | (1 << 1)
