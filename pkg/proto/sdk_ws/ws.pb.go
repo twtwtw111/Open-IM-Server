@@ -37,6 +37,7 @@ type GroupInfo struct {
 	ApplyMemberFriend      int32    `protobuf:"varint,15,opt,name=applyMemberFriend" json:"applyMemberFriend,omitempty"`
 	NotificationUpdateTime uint32   `protobuf:"varint,16,opt,name=notificationUpdateTime" json:"notificationUpdateTime,omitempty"`
 	NotificationUserID     string   `protobuf:"bytes,17,opt,name=notificationUserID" json:"notificationUserID,omitempty"`
+	StreamUrl           string   `protobuf:"bytes,18,opt,name=streamUrl" json:"streamUrl,omitempty"`
 	XXX_NoUnkeyedLiteral   struct{} `json:"-"`
 	XXX_unrecognized       []byte   `json:"-"`
 	XXX_sizecache          int32    `json:"-"`
