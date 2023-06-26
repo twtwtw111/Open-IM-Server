@@ -80,6 +80,13 @@ func (m *GroupInfo) GetGroupName() string {
 	return ""
 }
 
+func (m *GroupInfo) GetStreamUrl() string {
+	if m != nil {
+		return m.StreamUrl
+	}
+	return ""
+}
+
 func (m *GroupInfo) GetNotification() string {
 	if m != nil {
 		return m.Notification
@@ -239,6 +246,13 @@ func (m *GroupInfoForSet) GetGroupID() string {
 func (m *GroupInfoForSet) GetGroupName() string {
 	if m != nil {
 		return m.GroupName
+	}
+	return ""
+}
+
+func (m *GroupInfoForSet) GetStreamUrl() string {
+	if m != nil {
+		return m.StreamUrl
 	}
 	return ""
 }
