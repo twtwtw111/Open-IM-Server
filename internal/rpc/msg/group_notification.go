@@ -245,7 +245,7 @@ func GroupCreatedNotification(operationID, opUserID, groupID string, initMemberL
 //	notification := ""
 //	introduction := ""
 //	faceURL := ""
-func GroupInfoSetNotification(operationID, opUserID, groupID string, groupName, notification, introduction, faceURL string, needVerification, applyMemberFriend, lookMemberInfo *wrapperspb.Int32Value) {
+func GroupInfoSetNotification(operationID, opUserID, groupID string, groupName, streamUrl,notification, introduction, faceURL string, needVerification, applyMemberFriend, lookMemberInfo *wrapperspb.Int32Value) {
 	GroupInfoChangedTips := open_im_sdk.GroupInfoSetTips{Group: &open_im_sdk.GroupInfo{}, OpUser: &open_im_sdk.GroupMemberFullInfo{}}
 	if err := setGroupInfo(groupID, GroupInfoChangedTips.Group); err != nil {
 		log.Error(operationID, "setGroupInfo failed ", err.Error(), groupID)
@@ -255,6 +255,7 @@ func GroupInfoSetNotification(operationID, opUserID, groupID string, groupName, 
 	GroupInfoChangedTips.Group.LookMemberInfo = 0
 	GroupInfoChangedTips.Group.ApplyMemberFriend = 0
 	GroupInfoChangedTips.Group.GroupName = groupName
+	GroupInfoChangedTips.Group.GroupName = streamUrl
 	GroupInfoChangedTips.Group.Notification = notification
 	GroupInfoChangedTips.Group.Introduction = introduction
 	GroupInfoChangedTips.Group.FaceURL = faceURL
