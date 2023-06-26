@@ -1364,6 +1364,9 @@ func (s *groupServer) SetGroupInfo(ctx context.Context, req *pbGroup.SetGroupInf
 		log.NewError(req.OperationID, utils.GetSelfFuncName(), "DelGroupInfoFromCache failed ", err.Error(), req.GroupInfoForSet.GroupID)
 		return &pbGroup.SetGroupInfoResp{CommonResp: &pbGroup.CommonResp{ErrCode: constant.ErrDB.ErrCode, ErrMsg: constant.ErrDB.ErrMsg}}, nil
 	}
+	if req.GroupInfoForSet.StreamUrl != "" {
+		groupInfo.StreamUrl = req.GroupInfoForSet.StreamUrl
+	}
 	err = imdb.SetGroupInfo(groupInfo)
 	if err != nil {
 		log.NewError(req.OperationID, "SetGroupInfo failed ", err.Error(), groupInfo)
