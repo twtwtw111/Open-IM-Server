@@ -900,10 +900,10 @@ func argsHandle(params *api.SetGroupInfoReq, req *rpc.SetGroupInfoReq) {
 		req.GroupInfoForSet.AllowModifyNickname = &wrappers.Int32Value{Value: *params.AllowModifyNickname}
 		log.NewInfo(req.OperationID, "AllowModifyNickname", req.GroupInfoForSet.AllowModifyNickname)
 	}
-	if params.StreamUrl != nil {
-		req.GroupInfoForSet.StreamUrl = &wrappers.Int32Value{Value: *params.StreamUrl}
-		log.NewInfo(req.OperationID, "StreamUrl", req.GroupInfoForSet.StreamUrl)
-	}
+	// if params.StreamUrl != nil {
+	// 	req.GroupInfoForSet.StreamUrl = &wrappers.Int32Value{Value: *params.StreamUrl}
+	// 	log.NewInfo(req.OperationID, "StreamUrl", req.GroupInfoForSet.StreamUrl)
+	// }
 }
 
 // @Summary 转让群主
