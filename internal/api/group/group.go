@@ -849,7 +849,7 @@ func SetGroupInfo(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"errCode": 500, "errMsg": errMsg})
 		return
 	}
-	log.NewInfo(req.OperationID, "aaa", params.String())
+	log.NewInfo(req.OperationID, "aaa", "comming in")
 	log.NewInfo(req.OperationID, "SetGroupInfo args ", req.String())
 
 	etcdConn := getcdv3.GetDefaultConn(config.Config.Etcd.EtcdSchema, strings.Join(config.Config.Etcd.EtcdAddr, ","), config.Config.RpcRegisterName.OpenImGroupName, req.OperationID)
