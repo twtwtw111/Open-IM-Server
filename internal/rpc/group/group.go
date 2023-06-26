@@ -1353,7 +1353,7 @@ func (s *groupServer) SetGroupInfo(ctx context.Context, req *pbGroup.SetGroupInf
 	//if req.RoleLevel != nil {
 	//
 	//}
-	//only administrators can set group information
+	//only administrators can set group information1
 	var groupInfo db.Group
 	utils.CopyStructFields(&groupInfo, req.GroupInfoForSet)
 	if req.GroupInfoForSet.Notification != "" {
