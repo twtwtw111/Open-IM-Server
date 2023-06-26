@@ -49,9 +49,9 @@ func callbackBeforeCreateGroup(req *pbGroup.CreateGroupReq) cbApi.CommonCallback
 		if resp.GroupName != nil {
 			req.GroupInfo.GroupName = *resp.GroupName
 		}
-		if resp.StreamUrl != nil {
-			req.GroupInfo.StreamUrl = *resp.StreamUrl
-		}
+		// if resp.StreamUrl != nil {
+		// 	req.GroupInfo.StreamUrl = *resp.StreamUrl
+		// }
 		if resp.Notification != nil {
 			req.GroupInfo.Notification = *resp.Notification
 		}
