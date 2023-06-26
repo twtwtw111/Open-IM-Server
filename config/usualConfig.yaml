@@ -5,7 +5,7 @@ etcd:
 
 mysql:
   dbMysqlUserName: root
-  dbMysqlPassword: 
+  dbMysqlPassword: openIM123
 
 mongo:
   dbUserName:   root
