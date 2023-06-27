@@ -1276,6 +1276,7 @@ func hasAccess(req *pbGroup.SetGroupInfoReq) bool {
 }
 
 func (s *groupServer) SetGroupInfo(ctx context.Context, req *pbGroup.SetGroupInfoReq) (*pbGroup.SetGroupInfoResp, error) {
+	log.NewInfo("1", "jinlaile rpc", "jinlaile rpc")
 	log.NewInfo(req.OperationID, "SetGroupInfo args ", req.String())
 	if !hasAccess(req) {
 		log.NewError(req.OperationID, "no access ", req)
