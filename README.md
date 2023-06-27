@@ -202,5 +202,5 @@ Open-IM-Server is under the Apache 2.0 license. See the [LICENSE](./LICENSE) fil
 
 1. cd /home/Open-IM-Server/script  && ./batch_build_all_service.sh
 2. cd /root/Open-IM-Server/script && ./stop_all.sh
-3. cp -r -v /home/Open-IM-Server/bin /root/Open-IM-Server/
+3. \cp -r -v /home/Open-IM-Server/bin /root/Open-IM-Server/
 4. ./start_all.sh && ./check_all.sh
