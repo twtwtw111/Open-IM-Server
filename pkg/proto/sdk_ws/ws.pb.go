@@ -207,7 +207,7 @@ type GroupInfoForSet struct {
 	AllowSendVideo    *wrapperspb.Int32Value `protobuf:"bytes,11,opt,name=allowSendVideo" json:"allowSendVideo,omitempty"`
 	AllowRevokeMsg    *wrapperspb.Int32Value `protobuf:"bytes,12,opt,name=allowRevokeMsg" json:"allowRevokeMsg,omitempty"`
 	AllowModifyNickname    *wrapperspb.Int32Value `protobuf:"bytes,13,opt,name=allowModifyNickname" json:"allowModifyNickname,omitempty"`
-	StreamUrl            string          `protobuf:"bytes,14,opt,name=streamUrl" json:"ex,omitempty"`
+	StreamUrl            string          `protobuf:"bytes,14,opt,name=streamUrl" json:"streamUrl,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
 	XXX_unrecognized     []byte                 `json:"-"`
 	XXX_sizecache        int32                  `json:"-"`
