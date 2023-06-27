@@ -11,6 +11,7 @@ import (
 	open_im_sdk "Open_IM/pkg/proto/sdk_ws"
 	"Open_IM/pkg/utils"
 	"context"
+
 	"github.com/golang/protobuf/ptypes/wrappers"
 	"google.golang.org/grpc"
 
@@ -840,7 +841,6 @@ func SetGroupInfo(c *gin.Context) {
 	req := &rpc.SetGroupInfoReq{GroupInfoForSet: &open_im_sdk.GroupInfoForSet{}}
 	utils.CopyStructFields(req.GroupInfoForSet, &params)
 	req.OperationID = params.OperationID
-	req.StreamUrl = params.StreamUrl 
 	argsHandle(&params, req)
 	var ok bool
 	var errInfo string
@@ -1243,7 +1243,7 @@ func SetGroupMemberNickname(c *gin.Context) {
 	}
 	req := &rpc.SetGroupMemberNicknameReq{}
 	utils.CopyStructFields(req, &params)
-	
+
 	//是否允许修改群昵称
 	// groupInfo, err := rocksCache.GetGroupInfoFromCache(req.groupID)
 	// groupMemberInfo, err := rocksCache.GetGroupMemberInfoFromCache(req.groupID, req.userID)
