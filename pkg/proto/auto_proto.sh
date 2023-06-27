@@ -11,7 +11,7 @@ echo "proto file generate success"
 
 
 j=0
-for file in $(find ./Open_IM -name   "*.go"); do # Not recommended, will break on whitespace
+for file in $(find ./Open_IM -name   "*.go"); do # Not recommended, will break on whitespace1
     filelist[j]=$file
     j=`expr $j + 1`
 done
