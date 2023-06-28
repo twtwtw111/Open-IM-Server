@@ -287,7 +287,7 @@ func GetGroupInfoFromCache(groupID string) (*db.Group, error) {
 	}
 	groupInfo := &db.Group{}
 	err = json.Unmarshal([]byte(groupInfoStr), groupInfo)
-	log.NewDebug("", "huoqu groupinfo", groupInfo)
+	log.NewDebug("", "huoqu groupinfo", groupInfoStr)
 	return groupInfo, utils.Wrap(err, "")
 }
 
