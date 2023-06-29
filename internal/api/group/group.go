@@ -841,7 +841,7 @@ func SetGroupInfo(c *gin.Context) {
 	req := &rpc.SetGroupInfoReq{GroupInfoForSet: &open_im_sdk.GroupInfoForSet{}}
 	utils.CopyStructFields(req.GroupInfoForSet, &params)
 	req.OperationID = params.OperationID
-	req.StreamUrl = params.StreamUrl
+	// req.StreamUrl = params.StreamUrl
 	argsHandle(&params, req)
 	var ok bool
 	var errInfo string
@@ -886,23 +886,23 @@ func argsHandle(params *api.SetGroupInfoReq, req *rpc.SetGroupInfoReq) {
 		req.GroupInfoForSet.ApplyMemberFriend = &wrappers.Int32Value{Value: *params.ApplyMemberFriend}
 		log.NewInfo(req.OperationID, "ApplyMemberFriend ", req.GroupInfoForSet.ApplyMemberFriend)
 	}
-	if params.AllowSendImage != nil {
-		req.GroupInfoForSet.AllowSendImage = &wrappers.Int32Value{Value: *params.AllowSendImage}
-		log.NewInfo(req.OperationID, "AllowSendImage", req.GroupInfoForSet.AllowSendImage)
-	}
-	if params.AllowSendVideo != nil {
-		req.GroupInfoForSet.AllowSendVideo = &wrappers.Int32Value{Value: *params.AllowSendVideo}
-		log.NewInfo(req.OperationID, "AllowSendVideo", req.GroupInfoForSet.AllowSendVideo)
-	}
-	if params.AllowRevokeMsg != nil {
-		req.GroupInfoForSet.AllowRevokeMsg = &wrappers.Int32Value{Value: *params.AllowRevokeMsg}
-		log.NewInfo(req.OperationID, "AllowRevokeMsg", req.GroupInfoForSet.AllowRevokeMsg)
-	}
+	// if params.AllowSendImage != nil {
+	// 	req.GroupInfoForSet.AllowSendImage = &wrappers.Int32Value{Value: *params.AllowSendImage}
+	// 	log.NewInfo(req.OperationID, "AllowSendImage", req.GroupInfoForSet.AllowSendImage)
+	// }
+	// if params.AllowSendVideo != nil {
+	// 	req.GroupInfoForSet.AllowSendVideo = &wrappers.Int32Value{Value: *params.AllowSendVideo}
+	// 	log.NewInfo(req.OperationID, "AllowSendVideo", req.GroupInfoForSet.AllowSendVideo)
+	// }
+	// if params.AllowRevokeMsg != nil {
+	// 	req.GroupInfoForSet.AllowRevokeMsg = &wrappers.Int32Value{Value: *params.AllowRevokeMsg}
+	// 	log.NewInfo(req.OperationID, "AllowRevokeMsg", req.GroupInfoForSet.AllowRevokeMsg)
+	// }
 
-	if params.AllowModifyNickname != nil {
-		req.GroupInfoForSet.AllowModifyNickname = &wrappers.Int32Value{Value: *params.AllowModifyNickname}
-		log.NewInfo(req.OperationID, "AllowModifyNickname", req.GroupInfoForSet.AllowModifyNickname)
-	}
+	// if params.AllowModifyNickname != nil {
+	// 	req.GroupInfoForSet.AllowModifyNickname = &wrappers.Int32Value{Value: *params.AllowModifyNickname}
+	// 	log.NewInfo(req.OperationID, "AllowModifyNickname", req.GroupInfoForSet.AllowModifyNickname)
+	// }
 	// if params.StreamUrl != nil {
 	// 	req.GroupInfoForSet.StreamUrl = &wrappers.Int32Value{Value: *params.StreamUrl}
 	// 	log.NewInfo(req.OperationID, "StreamUrl", req.GroupInfoForSet.StreamUrl)
