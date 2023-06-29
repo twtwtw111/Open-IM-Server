@@ -841,6 +841,7 @@ func SetGroupInfo(c *gin.Context) {
 	req := &rpc.SetGroupInfoReq{GroupInfoForSet: &open_im_sdk.GroupInfoForSet{}}
 	utils.CopyStructFields(req.GroupInfoForSet, &params)
 	req.OperationID = params.OperationID
+	req.StreamUrl = params.StreamUrl
 	argsHandle(&params, req)
 	var ok bool
 	var errInfo string
