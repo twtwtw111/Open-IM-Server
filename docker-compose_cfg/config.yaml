@@ -40,12 +40,18 @@ rpcregistername: #rpc注册服务名，默认即可
 chat:
   codeTTL: 300 #短信验证码有效时间(秒)
   superVerificationCode: 666666 # 超级验证码
-  alismsverify: #阿里云短信配置，在阿里云申请成功后修改以下四项
-    accessKeyId:
-    accessKeySecret:
+  # alismsverify: #阿里云短信配置，在阿里云申请成功后修改以下四项
+  #   accessKeyId:
+  #   accessKeySecret:
+  #   signName:
+  #   verificationCodeTemplateCode:
+  tencentsms:
+    appID: 2400001489
+    region: ap-singapore
+    secretID: IKIDc8RWP3TfcLp58wTnrSntkMjsmSv9Awvi
+    secretKey: f7NSJwKVVJvLbgW1LTP9j5E8rPmxwiHb
     signName:
-    verificationCodeTemplateCode:
-
+    verificationCodeTemplateCode: 2907841
 
 oss:
   tempDir: enterprise-temp # 临时密钥上传的目录
