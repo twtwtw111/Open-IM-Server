@@ -51,7 +51,7 @@ chat:
     secretID: IKIDc8RWP3TfcLp58wTnrSntkMjsmSv9Awvi
     secretKey: f7NSJwKVVJvLbgW1LTP9j5E8rPmxwiHb
     signName:
-    verificationCodeTemplateCode: 2907841
+    verificationCodeTemplateCode: 2907846
 
 oss:
   tempDir: enterprise-temp # 临时密钥上传的目录
