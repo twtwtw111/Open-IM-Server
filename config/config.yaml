@@ -222,7 +222,7 @@ push:
       accessID:
       secretKey:
     enable: false # true or false (bool)
-  jpns: #极光推送 在极光后台申请后，修改以下四项，必须修改
+  jpns: #极光推送 在极光后台申请后，修改以下四项，必须修改12
     appKey: 227f0a32644f568824d0d1d3
     masterSecret: 61392a50f83bbaf99ec70e62
     pushUrl: https://api.jpush.cn/v3/push
