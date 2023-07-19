@@ -28,7 +28,7 @@ check_command docker-compose
 check_docker
 
 # Change to the script directory
-cd $SCRIPT_DIR
+cd script
 
 # Set permissions for the scripts
 chmod +x *.sh
