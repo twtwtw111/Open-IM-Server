@@ -8,10 +8,10 @@ services:
       - 23306:33060
     container_name: mysql
     volumes:
-      - ${DATA_DIR}/components/mysql/data:/var/lib/mysql
+      - /data/mydb/data:/var/lib/mysql
       - /etc/localtime:/etc/localtime
     environment:
-      MYSQL_ROOT_PASSWORD: ${PASSWORD}
+      MYSQL_ROOT_PASSWORD: 9i9i1Ij1nhsdfkkB7shdB147h
     restart: always
 
   mongodb:
@@ -21,37 +21,37 @@ services:
     container_name: mongo
     command: --wiredTigerCacheSizeGB 1 --auth
     volumes:
-      - ${DATA_DIR}/components/mongodb/data/db:/data/db
-      - ${DATA_DIR}/components/mongodb/data/logs:/data/logs
-      - ${DATA_DIR}/components/mongodb/data/conf:/etc/mongo
-      - ./script/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro 
+      - /data/modb/data/db:/data/db
+      - /data/modb/data/logs:/data/logs
+      - /data/modb/data/conf:/etc/mongo
+      - ./script/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
     environment:
       - TZ=Asia/Shanghai
       # cache
       - wiredTigerCacheSizeGB=1
-      - MONGO_INITDB_ROOT_USERNAME=${USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=m0ng0dbt1Njs1
       - MONGO_INITDB_DATABASE=openIM
-      - MONGO_USERNAME=${USER}
-      - MONGO_PASSWORD=${PASSWORD}
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=m0ng0dbt1Njs@
     #
     restart: always
 
   redis:
-    image: redis
+    image: redis:6.0.20-alpine3.18
     ports:
       - 16379:6379
     container_name: redis
     volumes:
-      - ${DATA_DIR}/components/redis/data:/data
+      - /data/redis/data:/data
       #redis config file
-      - ${DATA_DIR}/components/redis/config/redis.conf:/usr/local/redis/config/redis.conf
+      - /data/redis/config/redis.conf:/usr/local/redis/config/redis.conf
     environment:
       TZ: Asia/Shanghai
     restart: always
     sysctls:
       net.core.somaxconn: 1024
-    command: redis-server --requirepass ${PASSWORD} --appendonly yes
+    command: redis-server --requirepass 919ijj7hbvhbnJ --appendonly yes
 
 
   zookeeper:
@@ -64,6 +64,7 @@ services:
     environment:
       TZ: Asia/Shanghai
     restart: always
+
 
   kafka:
     image: wurstmeister/kafka
@@ -98,19 +99,20 @@ services:
     command: /usr/local/bin/etcd --name etcd0 --data-dir /etcd-data --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 --initial-cluster etcd0=http://0.0.0.0:2380 --initial-cluster-token tkn --initial-cluster-state new
 
   minio:
-    image: minio/minio
+    image: minio/minio:RELEASE.2023-02-27T18-10-45Z.hotfix.6ba7e7dbf
     ports:
       - 10005:9000
       - 9090:9090
     container_name: minio
     volumes:
-      - /mnt/data:/data
-      - /mnt/config:/root/.minio
+      - /data/minio/data:/data
+      - /data/minio/config:/root/.minio
     environment:
-      MINIO_ROOT_USER: ${USER}
-      MINIO_ROOT_PASSWORD: ${PASSWORD}
+      MINIO_ROOT_USER: m1n10r007
+      MINIO_ROOT_PASSWORD: m1m1n1077shJnsdnHGsj112sdgb
     restart: always
     command: minio server /data --console-address ':9090'
+
 
   open_im_server:
     image: openim/open_im_server:v2.3.9
@@ -167,24 +169,24 @@ services:
     #    ports:
     #    - 9091:9091
     depends_on:
-    - open_im_server
+      - open_im_server
     command: --web.listen-address=:9091 --config.file="/etc/prometheus/prometheus.yml"
-    network_mode: "host" 
+    network_mode: "host"
 
   grafana:
     image: grafana/grafana
     volumes:
-    # - ./grafana/dashboards/dashboard.json:/var/lib/grafana/dashboards/dashboard.json
-    # - ./grafana/provisioning/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
-    - ./docker-compose_cfg/datasource-compose.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
-    - ./docker-compose_cfg/grafana.ini:/etc/grafana/grafana.ini
-    - ./docker-compose_cfg/node-exporter-full_rev1.json:/var/lib/grafana/dashboards/node-exporter-full_rev1.json
+      # - ./grafana/dashboards/dashboard.json:/var/lib/grafana/dashboards/dashboard.json
+      # - ./grafana/provisioning/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./docker-compose_cfg/datasource-compose.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+      - ./docker-compose_cfg/grafana.ini:/etc/grafana/grafana.ini
+      - ./docker-compose_cfg/node-exporter-full_rev1.json:/var/lib/grafana/dashboards/node-exporter-full_rev1.json
     container_name: grafana
     #    ports:
     #    - 10007:10007
     depends_on:
-    - prometheus
-    network_mode: "host" 
+      - prometheus
+    network_mode: "host"
 
   node-exporter:
     image: quay.io/prometheus/node-exporter
