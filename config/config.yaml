@@ -216,18 +216,18 @@ longconnsvr:
 push:
   tpns: #腾讯推送，暂未测试 暂不要使用
     ios:
-      accessID:
-      secretKey:
+      accessID: 1630003917
+      secretKey: a85d47677907afeb94d32c5b13c50d91
     android:
-      accessID:
-      secretKey:
-    enable: false # true or false (bool)
+      accessID: 1530003915
+      secretKey: dd893a961f2c140e9da9046f8158a23a
+    enable: true # true or false (bool)
   jpns: #极光推送 在极光后台申请后，修改以下四项，必须修改12
     appKey: 227f0a32644f568824d0d1d3
     masterSecret: 61392a50f83bbaf99ec70e62
     pushUrl: https://api.jpush.cn/v3/push
     pushIntent:
-    enable: true # true or false (bool)
+    enable: false # true or false (bool)
   getui:  #个推推送
     pushUrl: 
     masterSecret: ""
@@ -298,7 +298,7 @@ messageverify:
 iospush:
   pushSound: "xxx"
   badgeCount: true
-  production: false
+  production: true
 
 callback:
   # callback url 需要自行更换callback url
