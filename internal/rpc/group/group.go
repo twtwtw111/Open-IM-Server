@@ -339,7 +339,7 @@ func (s *groupServer) GetJoinedGroupList(ctx context.Context, req *pbGroup.GetJo
 		if group.NotificationUpdateTime.Unix() < 0 {
 			groupNode.NotificationUpdateTime = 0
 		}
-
+		json.Unmarshal([]byte(group.Config), groupNode.Config)
 		groupNode.MemberCount = uint32(num)
 		groupNode.OwnerUserID = owner.UserID
 		resp.GroupList = append(resp.GroupList, &groupNode)

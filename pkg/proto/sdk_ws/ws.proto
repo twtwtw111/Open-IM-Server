@@ -36,6 +36,11 @@ message GroupConfig {
   int32 sendQuoteMessage = 5;
   int32 sendEditMessage = 6;
 
+  int32 allowInvite = 7;
+  int32 prohibit = 8;
+  int32 approveJoin = 9;
+  int32 messageInterval = 10;
+
 }
 
 message GroupInfoForSet{

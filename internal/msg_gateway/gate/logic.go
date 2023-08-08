@@ -277,11 +277,16 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 	}
 
 }
+
+/*
+*
+开始校验群消息是否有权限发生
+*/
 func (ws *WServer) checkGroupMessage(operationID string, sendId string, groupId string, contentType int32) error {
-	if contentType == constant.Text {
+	if contentType == constant.Text || groupId == "" {
 		return nil
 	}
-	log.NewInfo(operationID, "checkGroupMessage 开始校验成员是否有权限发生本次消息", sendId, groupId, contentType)
+	log.NewInfo(operationID, "checkGroupMessage 开始校验成员是否有权限发生本次消息", "sendId:", sendId, "groupId:", groupId, "contentType:", contentType)
 	req := &rpc.GetGroupsInfoReq{}
 	req.OperationID = operationID
 	req.GroupIDList = []string{groupId}
@@ -299,11 +304,12 @@ func (ws *WServer) checkGroupMessage(operationID string, sendId string, groupId 
 		for _, info := range rpcResp.GroupInfoList {
 			//如果本次消息是群主发生的就不再检查
 			if info.CreatorUserID == sendId {
+				log.NewInfo(operationID, "checkGroupMessage 你是群主，该你牛")
 				return nil
 			}
 			//检查图片消息
 			if info.Config.SendPic > 1 && contentType == constant.Picture {
-				log.NewInfo(operationID, "checkGroupMessage 群成员没有权限发生图片", sendId, groupId, contentType)
+				log.NewInfo(operationID, "checkGroupMessage 群成员没有权限发生图片")
 				return errors.New("你没有权限发生图片")
 			}
 		}
