@@ -3,7 +3,7 @@ import "wrappers.proto";
 option go_package = "Open_IM/pkg/proto/sdk_ws;server_api_params";
 package server_api_params;
 
-
+// 编译命令:   protoc -I=. --go_out ./ ./ws.proto
 ////////////////////////////////base///////////////////////////////
 
 

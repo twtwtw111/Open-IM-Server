@@ -7,6 +7,7 @@ import (
 	"Open_IM/pkg/common/log"
 	promePkg "Open_IM/pkg/common/prometheus"
 	"Open_IM/pkg/grpc-etcdv3/getcdv3"
+	rpc "Open_IM/pkg/proto/group"
 	pbChat "Open_IM/pkg/proto/msg"
 	push "Open_IM/pkg/proto/push"
 	pbRtc "Open_IM/pkg/proto/rtc"
@@ -15,6 +16,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/gob"
+	"errors"
 	"runtime"
 	"strings"
 
@@ -53,6 +55,7 @@ func (ws *WServer) msgParse(conn *UserConn, binaryMsg []byte) {
 		log.NewInfo(m.OperationID, "getSeqReq ", m.SendID, m.MsgIncr, m.ReqIdentifier)
 		ws.getSeqReq(conn, &m)
 		promePkg.PromeInc(promePkg.GetNewestSeqTotalCounter)
+		//发消息的消息类型
 	case constant.WSSendMsg:
 		log.NewInfo(m.OperationID, "sendMsgReq ", m.SendID, m.MsgIncr, m.ReqIdentifier)
 		ws.sendMsgReq(conn, &m)
@@ -245,6 +248,16 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 			ws.sendMsgResp(conn, m, nReply)
 			return
 		}
+		//开始检查群成员是否有权限发生本次消息
+
+		if err := ws.checkGroupMessage(m.OperationID, data.SendID, data.GroupID, data.ContentType); err != nil {
+			nReply.ErrCode = 500
+			nReply.ErrMsg = err.Error()
+			log.NewError(m.OperationID, errMsg)
+			ws.sendMsgResp(conn, m, nReply)
+			return
+		}
+
 		client := pbChat.NewMsgClient(etcdConn)
 		reply, err := client.SendMsg(context.Background(), &pbData)
 		if err != nil {
@@ -263,6 +276,39 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 		ws.sendMsgResp(conn, m, nReply)
 	}
 
+}
+func (ws *WServer) checkGroupMessage(operationID string, sendId string, groupId string, contentType int32) error {
+	if contentType == constant.Text {
+		return nil
+	}
+	log.NewInfo(operationID, "checkGroupMessage 开始校验成员是否有权限发生本次消息", sendId, groupId, contentType)
+	req := &rpc.GetGroupsInfoReq{}
+	req.OperationID = operationID
+	req.GroupIDList = []string{groupId}
+	log.NewInfo(req.OperationID, "GetGroupsInfo args ", req.String())
+	etcdConn := getcdv3.GetDefaultConn(config.Config.Etcd.EtcdSchema, strings.Join(config.Config.Etcd.EtcdAddr, ","), config.Config.RpcRegisterName.OpenImGroupName, req.OperationID)
+	if etcdConn == nil {
+		return errors.New("未知错误")
+	}
+	client := rpc.NewGroupClient(etcdConn)
+	rpcResp, err := client.GetGroupsInfo(context.Background(), req)
+	if err != nil {
+		return errors.New("未知错误:" + err.Error())
+	}
+	if len(rpcResp.GroupInfoList) > 0 {
+		for _, info := range rpcResp.GroupInfoList {
+			//如果本次消息是群主发生的就不再检查
+			if info.CreatorUserID == sendId {
+				return nil
+			}
+			//检查图片消息
+			if info.Config.SendPic > 1 && contentType == constant.Picture {
+				log.NewInfo(operationID, "checkGroupMessage 群成员没有权限发生图片", sendId, groupId, contentType)
+				return errors.New("你没有权限发生图片")
+			}
+		}
+	}
+	return nil
 }
 func (ws *WServer) sendMsgResp(conn *UserConn, m *Req, pb *pbChat.SendMsgResp) {
 	var mReplyData sdk_ws.UserSendMsgResp
