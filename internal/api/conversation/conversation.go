@@ -312,17 +312,17 @@ func SetRecvMsgOpt(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
-//Deprecated
+// Deprecated
 func SetReceiveMessageOpt(c *gin.Context) {
 
 }
 
-//Deprecated
+// Deprecated
 func GetReceiveMessageOpt(c *gin.Context) {
 
 }
 
-//Deprecated
+// Deprecated
 func GetAllConversationMessageOpt(c *gin.Context) {
 
 }

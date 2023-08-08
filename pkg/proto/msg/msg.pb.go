@@ -241,26 +241,27 @@ func (m *MsgDataToMongoByMQ) GetTriggerID() string {
 	return ""
 }
 
-// message PullMessageReq {
-//  string UserID = 1;
-//  int64 SeqBegin = 2;
-//  int64 SeqEnd = 3;
-//  string OperationID = 4;
-// }
+//	message PullMessageReq {
+//	 string UserID = 1;
+//	 int64 SeqBegin = 2;
+//	 int64 SeqEnd = 3;
+//	 string OperationID = 4;
+//	}
 //
-// message PullMessageResp {
-//  int32 ErrCode = 1;
-//  string ErrMsg = 2;
-//  int64 MaxSeq = 3;
-//  int64 MinSeq = 4;
-//  repeated GatherFormat SingleUserMsg = 5;
-//  repeated GatherFormat GroupUserMsg = 6;
-// }
-// message PullMessageBySeqListReq{
-//  string UserID = 1;
-//  string OperationID = 2;
-//  repeated int64 seqList =3;
-// }
+//	message PullMessageResp {
+//	 int32 ErrCode = 1;
+//	 string ErrMsg = 2;
+//	 int64 MaxSeq = 3;
+//	 int64 MinSeq = 4;
+//	 repeated GatherFormat SingleUserMsg = 5;
+//	 repeated GatherFormat GroupUserMsg = 6;
+//	}
+//
+//	message PullMessageBySeqListReq{
+//	 string UserID = 1;
+//	 string OperationID = 2;
+//	 repeated int64 seqList =3;
+//	}
 type GetMaxAndMinSeqReq struct {
 	UserID               string   `protobuf:"bytes,1,opt,name=UserID" json:"UserID,omitempty"`
 	OperationID          string   `protobuf:"bytes,2,opt,name=OperationID" json:"OperationID,omitempty"`

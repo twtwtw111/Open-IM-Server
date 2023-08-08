@@ -306,14 +306,14 @@ func AccountList(al []string) ReqOpt {
 	}
 }
 
-//ChannelDistributeRules
+// ChannelDistributeRules
 func AddChannelRules(ChannelRules []*tpns.ChannelDistributeRule) ReqOpt {
 	return func(r *tpns.Request) {
 		r.ChannelRules = ChannelRules
 	}
 }
 
-//ChannelDistributeRules
+// ChannelDistributeRules
 func AddLoopParam(loopParam *tpns.PushLoopParam) ReqOpt {
 	return func(r *tpns.Request) {
 		r.LoopParam = loopParam

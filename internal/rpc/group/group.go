@@ -21,6 +21,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/goccy/go-json"
 	"math/big"
 	"net"
 	"strconv"
@@ -142,14 +143,19 @@ func (s *groupServer) CreateGroup(ctx context.Context, req *pbGroup.CreateGroupR
 	}
 	//to group
 	groupInfo := db.Group{}
-	utils.CopyStructFields(&groupInfo, req.GroupInfo)
+	err := utils.CopyStructFields(&groupInfo, req.GroupInfo)
+	if err != nil {
+		return nil, err
+	}
 	groupInfo.CreatorUserID = req.OpUserID
 	groupInfo.GroupID = groupId
 	groupInfo.CreateTime = time.Now()
+	configByte, _ := json.Marshal(req.GroupInfo.Config)
+	groupInfo.Config = string(configByte)
 	if groupInfo.NotificationUpdateTime.Unix() < 0 {
 		groupInfo.NotificationUpdateTime = utils.UnixSecondToTime(0)
 	}
-	err := imdb.InsertIntoGroup(groupInfo)
+	err = imdb.InsertIntoGroup(groupInfo)
 	if err != nil {
 		log.NewError(req.OperationID, "InsertIntoGroup failed, ", err.Error(), groupInfo)
 		return &pbGroup.CreateGroupResp{ErrCode: constant.ErrDB.ErrCode, ErrMsg: constant.ErrDB.ErrMsg}, nil
@@ -905,6 +911,8 @@ func (s *groupServer) GetGroupsInfo(ctx context.Context, req *pbGroup.GetGroupsI
 		//groupInfo.NeedVerification
 
 		groupInfo.NeedVerification = groupInfoFromRedis.NeedVerification
+		log.NewInfo(req.OperationID, "GetGroupsInfo rpc return  ", groupInfoFromRedis.Config)
+		json.Unmarshal([]byte(groupInfoFromRedis.Config), groupInfo.Config)
 		groupsInfoList = append(groupsInfoList, &groupInfo)
 	}
 
@@ -1276,7 +1284,6 @@ func hasAccess(req *pbGroup.SetGroupInfoReq) bool {
 }
 
 func (s *groupServer) SetGroupInfo(ctx context.Context, req *pbGroup.SetGroupInfoReq) (*pbGroup.SetGroupInfoResp, error) {
-	log.NewInfo("1", "jinlaile rpc", "jinlaile rpc")
 	log.NewInfo(req.OperationID, "SetGroupInfo args ", req.String())
 	if !hasAccess(req) {
 		log.NewError(req.OperationID, "no access ", req)
@@ -1368,6 +1375,13 @@ func (s *groupServer) SetGroupInfo(ctx context.Context, req *pbGroup.SetGroupInf
 	if req.GroupInfoForSet.StreamUrl != "" {
 		groupInfo.StreamUrl = req.GroupInfoForSet.StreamUrl
 	}
+	//更新群配置
+	configByte, _ := json.Marshal(req.GroupInfoForSet.Config)
+	configStr := string(configByte)
+	if configStr != "" && configStr != "{}" {
+		groupInfo.Config = configStr
+	}
+	log.NewInfo(req.OperationID, "config:", configStr)
 	err = imdb.SetGroupInfo(groupInfo)
 	if err != nil {
 		log.NewError(req.OperationID, "SetGroupInfo failed ", err.Error(), groupInfo)
@@ -1495,6 +1509,7 @@ func (s *groupServer) GetGroups(_ context.Context, req *pbGroup.GetGroupsReq) (*
 		resp.GroupNum = 1
 		groupInfo := &open_im_sdk.GroupInfo{}
 		utils.CopyStructFields(groupInfo, groupInfoDB)
+		json.Unmarshal([]byte(groupInfoDB.Config), &groupInfo.Config)
 		groupMember, err := imdb.GetGroupOwnerInfoByGroupID(req.GroupID)
 		if err != nil {
 			log.NewError(req.OperationID, utils.GetSelfFuncName(), err.Error(), req.GroupID)

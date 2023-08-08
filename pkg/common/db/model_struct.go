@@ -94,17 +94,18 @@ type Group struct {
 	FaceURL                string    `gorm:"column:face_url;size:255" json:"faceURL"`
 	CreateTime             time.Time `gorm:"column:create_time;index:create_time"`
 	Ex                     string    `gorm:"column:ex" json:"ex;size:1024" json:"ex"`
+	Config                 string    `gorm:"column:config" json:"config;size:2048" json:"config"`
 	Status                 int32     `gorm:"column:status"`
 	CreatorUserID          string    `gorm:"column:creator_user_id;size:64"`
 	GroupType              int32     `gorm:"column:group_type"`
 	NeedVerification       int32     `gorm:"column:need_verification"`
 	LookMemberInfo         int32     `gorm:"column:look_member_info" json:"lookMemberInfo"`
 	ApplyMemberFriend      int32     `gorm:"column:apply_member_friend" json:"applyMemberFriend"`
-	AllowSendImage		   int32	 `gorm:"column:allow_send_image" json:"allowSendImage"`
-	AllowSendVideo		   int32	 `gorm:"column:allow_send_video" json:"allowSendVideo"`
-	AllowRevokeMsg		   int32	 `gorm:"column:allow_revoke_msg" json:"allowRevokeMsg"`
-	AllowModifyNickname	   int32	 `gorm:"column:allow_modify_nickname" json:"allowModifyNickname"`
-	StreamUrl      string     `gorm:"column:stream_url" json:"streamUrl"`
+	AllowSendImage         int32     `gorm:"column:allow_send_image" json:"allowSendImage"`
+	AllowSendVideo         int32     `gorm:"column:allow_send_video" json:"allowSendVideo"`
+	AllowRevokeMsg         int32     `gorm:"column:allow_revoke_msg" json:"allowRevokeMsg"`
+	AllowModifyNickname    int32     `gorm:"column:allow_modify_nickname" json:"allowModifyNickname"`
+	StreamUrl              string    `gorm:"column:stream_url" json:"streamUrl"`
 	NotificationUpdateTime time.Time `gorm:"column:notification_update_time"`
 	NotificationUserID     string    `gorm:"column:notification_user_id;size:64"`
 }

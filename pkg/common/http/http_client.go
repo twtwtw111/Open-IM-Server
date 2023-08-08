@@ -29,7 +29,7 @@ func Get(url string) (response []byte, err error) {
 	return body, nil
 }
 
-//application/json; charset=utf-8
+// application/json; charset=utf-8
 func Post(url string, data interface{}, timeOutSecond int) (content []byte, err error) {
 	jsonStr, err := json.Marshal(data)
 	if err != nil {

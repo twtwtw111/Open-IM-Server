@@ -69,7 +69,7 @@ func ConversationChangeNotification(operationID, userID string) {
 	SetConversationNotification(operationID, userID, userID, constant.ConversationOptChangeNotification, ConversationChangedTips, tips)
 }
 
-//会话未读数同步
+// 会话未读数同步
 func ConversationUnreadChangeNotification(operationID, userID, conversationID string, updateUnreadCountTime int64) {
 	log.NewInfo(operationID, utils.GetSelfFuncName())
 	ConversationChangedTips := &open_im_sdk.ConversationUpdateTips{

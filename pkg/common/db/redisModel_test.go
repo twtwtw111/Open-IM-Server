@@ -26,11 +26,11 @@ func Test_GetTokenMapByUidPid(t *testing.T) {
 	fmt.Println(m)
 }
 
-//func TestDataBases_GetMultiConversationMsgOpt(t *testing.T) {
-//	m, err := DB.GetMultiConversationMsgOpt("fg", []string{"user", "age", "color"})
-//	assert.Nil(t, err)
-//	fmt.Println(m)
-//}
+//	func TestDataBases_GetMultiConversationMsgOpt(t *testing.T) {
+//		m, err := DB.GetMultiConversationMsgOpt("fg", []string{"user", "age", "color"})
+//		assert.Nil(t, err)
+//		fmt.Println(m)
+//	}
 func Test_GetKeyTTL(t *testing.T) {
 	ctx := context.Background()
 	key := flag.String("key", "key", "key value")

@@ -87,10 +87,11 @@ for ((i = 0; i < ${#service_filename[*]}; i++)); do
       cmd="./${service_filename[$i]} -port ${service_ports[$j]}"
     fi
     echo $cmd
+    echo "执行启动命令:"
+    echo "nohup $cmd >>../logs/openIM.log 2>&1 &"
     nohup $cmd >>../logs/openIM.log 2>&1 &
     sleep 1
     pid="netstat -ntlp|grep $j |awk '{printf \$7}'|cut -d/ -f1"
-    echo "netstat -ntlp|grep $j |awk '{printf \$7}'|cut -d/ -f1"
     echo -e "${GREEN_PREFIX}${service_filename[$i]} start success,port number:${service_ports[$j]} pid:$(eval $pid)$COLOR_SUFFIX"
   done
 done

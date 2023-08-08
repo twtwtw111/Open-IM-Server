@@ -1376,7 +1376,7 @@ func (x *DeleteFriendResp) GetCommonResp() *CommonResp {
 	return nil
 }
 
-//process
+// process
 type AddFriendResponseReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

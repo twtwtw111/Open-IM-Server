@@ -115,6 +115,8 @@ type CreateGroupReq struct {
 	Ex           string                `json:"ex"`
 	OperationID  string                `json:"operationID" binding:"required"`
 	GroupID      string                `json:"groupID"`
+
+	Config *open_im_sdk.GroupConfig `json:"config"`
 }
 type CreateGroupResp struct {
 	CommResp
@@ -205,21 +207,22 @@ type QuitGroupResp struct {
 }
 
 type SetGroupInfoReq struct {
-	GroupID           string `json:"groupID" binding:"required"`
-	GroupName         string `json:"groupName"`
-	Notification      string `json:"notification"`
-	Introduction      string `json:"introduction"`
-	FaceURL           string `json:"faceURL"`
-	Ex                string `json:"ex"`
-	OperationID       string `json:"operationID" binding:"required"`
-	NeedVerification  *int32 `json:"needVerification"`
-	LookMemberInfo    *int32 `json:"lookMemberInfo"`
-	ApplyMemberFriend *int32 `json:"applyMemberFriend"`
-	AllowSendImage    *int32 `json:"allowSendImage"`
-	AllowSendVideo    *int32 `json:"allowSendVideo"` 
-	AllowRevokeMsg    *int32 `json:"allowRevokeMsg"`   
-	AllowModifyNickname   *int32 `json:"allowModifyNickname"`
-	StreamUrl   string `json:"StreamUrl"`
+	GroupID             string                   `json:"groupID" binding:"required"`
+	GroupName           string                   `json:"groupName"`
+	Notification        string                   `json:"notification"`
+	Introduction        string                   `json:"introduction"`
+	FaceURL             string                   `json:"faceURL"`
+	Ex                  string                   `json:"ex"`
+	OperationID         string                   `json:"operationID" binding:"required"`
+	NeedVerification    *int32                   `json:"needVerification"`
+	LookMemberInfo      *int32                   `json:"lookMemberInfo"`
+	ApplyMemberFriend   *int32                   `json:"applyMemberFriend"`
+	AllowSendImage      *int32                   `json:"allowSendImage"`
+	AllowSendVideo      *int32                   `json:"allowSendVideo"`
+	AllowRevokeMsg      *int32                   `json:"allowRevokeMsg"`
+	AllowModifyNickname *int32                   `json:"allowModifyNickname"`
+	StreamUrl           string                   `json:"StreamUrl"`
+	Config              *open_im_sdk.GroupConfig `json:"config"`
 }
 
 type SetGroupInfoResp struct {

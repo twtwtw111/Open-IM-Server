@@ -63,33 +63,33 @@ func (d *DataBases) GetAccountCode(account string) (string, error) {
 	return d.RDB.Get(context.Background(), key).Result()
 }
 
-//Perform seq auto-increment operation of user messages
+// Perform seq auto-increment operation of user messages
 func (d *DataBases) IncrUserSeq(uid string) (uint64, error) {
 	key := userIncrSeq + uid
 	seq, err := d.RDB.Incr(context.Background(), key).Result()
 	return uint64(seq), err
 }
 
-//Get the largest Seq
+// Get the largest Seq
 func (d *DataBases) GetUserMaxSeq(uid string) (uint64, error) {
 	key := userIncrSeq + uid
 	seq, err := d.RDB.Get(context.Background(), key).Result()
 	return uint64(utils.StringToInt(seq)), err
 }
 
-//set the largest Seq
+// set the largest Seq
 func (d *DataBases) SetUserMaxSeq(uid string, maxSeq uint64) error {
 	key := userIncrSeq + uid
 	return d.RDB.Set(context.Background(), key, maxSeq, 0).Err()
 }
 
-//Set the user's minimum seq
+// Set the user's minimum seq
 func (d *DataBases) SetUserMinSeq(uid string, minSeq uint32) (err error) {
 	key := userMinSeq + uid
 	return d.RDB.Set(context.Background(), key, minSeq, 0).Err()
 }
 
-//Get the smallest Seq
+// Get the smallest Seq
 func (d *DataBases) GetUserMinSeq(uid string) (uint64, error) {
 	key := userMinSeq + uid
 	seq, err := d.RDB.Get(context.Background(), key).Result()
@@ -128,7 +128,7 @@ func (d *DataBases) SetGroupMinSeq(groupID string, minSeq uint32) error {
 	return d.RDB.Set(context.Background(), key, minSeq, 0).Err()
 }
 
-//Store userid and platform class to redis
+// Store userid and platform class to redis
 func (d *DataBases) AddTokenFlag(userID string, platformID int, token string, flag int) error {
 	key := uidPidToken + userID + ":" + constant.PlatformIDToName(platformID)
 	log2.NewDebug("", "add token key is ", key)

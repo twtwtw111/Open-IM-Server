@@ -1,5 +1,5 @@
 syntax = "proto3";
-import "Open-IM-Server/pkg/proto/sdk_ws/wrappers.proto";
+import "wrappers.proto";
 option go_package = "Open_IM/pkg/proto/sdk_ws;server_api_params";
 package server_api_params;
 
@@ -26,6 +26,16 @@ message GroupInfo{
   uint32 notificationUpdateTime = 16;
   string notificationUserID = 17;
   string streamUrl = 18;
+  GroupConfig config = 19;
+}
+message GroupConfig {
+  int32 sendPic = 1;
+  int32 sendVideo = 2;
+  int32 sendFile = 3;
+  int32 sendLongText = 4;
+  int32 sendQuoteMessage = 5;
+  int32 sendEditMessage = 6;
+
 }
 
 message GroupInfoForSet{
@@ -39,6 +49,7 @@ message GroupInfoForSet{
   google.protobuf.Int32Value lookMemberInfo = 8;
   google.protobuf.Int32Value applyMemberFriend = 9;
   string streamUrl = 18;
+  GroupConfig config = 19;
 }
 
 
@@ -243,7 +254,7 @@ message UserSendMsgResp {
   string serverMsgID = 1;
   string clientMsgID = 2;
   int64  sendTime = 3;
-  string  ex   = 4;
+  string  ex = 4;
 }
 
 message MsgData {

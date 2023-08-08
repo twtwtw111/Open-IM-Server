@@ -637,7 +637,8 @@ func GetGroupsInfo(c *gin.Context) {
 		return
 	}
 
-	resp := api.GetGroupInfoResp{CommResp: api.CommResp{ErrCode: RpcResp.ErrCode, ErrMsg: RpcResp.ErrMsg}, GroupInfoList: RpcResp.GroupInfoList}
+	resp := api.GetGroupInfoResp{CommResp: api.CommResp{ErrCode: RpcResp.ErrCode, ErrMsg: RpcResp.ErrMsg},
+		GroupInfoList: RpcResp.GroupInfoList}
 	resp.Data = jsonData.JsonDataList(resp.GroupInfoList)
 	log.NewInfo(req.OperationID, "GetGroupsInfo api return ", resp)
 	c.JSON(http.StatusOK, resp)
@@ -831,7 +832,6 @@ func QuitGroup(c *gin.Context) {
 // @Failure 400 {object} api.Swagger400Resp "errCode为400 一般为参数输入错误, token未带上等"
 // @Router /group/set_group_info [post]
 func SetGroupInfo(c *gin.Context) {
-	log.NewInfo("1", "jinlaile", "jinlaile")
 	params := api.SetGroupInfoReq{}
 	if err := c.BindJSON(&params); err != nil {
 		log.NewError("0", "BindJSON failed ", err.Error())

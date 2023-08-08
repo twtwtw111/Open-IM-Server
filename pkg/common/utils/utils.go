@@ -36,7 +36,6 @@ func FriendDBCopyOpenIM(dst *open_im_sdk.FriendInfo, src *db.Friend) error {
 	return nil
 }
 
-//
 func FriendRequestOpenIMCopyDB(dst *db.FriendRequest, src *open_im_sdk.FriendRequest) {
 	utils.CopyStructFields(dst, src)
 	dst.CreateTime = utils.UnixSecondToTime(int64(src.CreateTime))

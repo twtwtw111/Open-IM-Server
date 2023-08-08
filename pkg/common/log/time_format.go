@@ -16,30 +16,30 @@ const (
 	HalfOffset = 12 * 3600 //Half-day hourly offset
 )
 
-//Get the current timestamp
+// Get the current timestamp
 func GetCurrentTimestamp() int64 {
 	return time.Now().Unix()
 }
 
-//Get the current 0 o'clock timestamp
+// Get the current 0 o'clock timestamp
 func GetCurDayZeroTimestamp() int64 {
 	timeStr := time.Now().Format("2006-01-02")
 	t, _ := time.Parse("2006-01-02", timeStr)
 	return t.Unix() - TimeOffset
 }
 
-//Get the timestamp at 12 o'clock on the day
+// Get the timestamp at 12 o'clock on the day
 func GetCurDayHalfTimestamp() int64 {
 	return GetCurDayZeroTimestamp() + HalfOffset
 
 }
 
-//Get the formatted time at 0 o'clock of the day, the format is "2006-01-02_00-00-00"
+// Get the formatted time at 0 o'clock of the day, the format is "2006-01-02_00-00-00"
 func GetCurDayZeroTimeFormat() string {
 	return time.Unix(GetCurDayZeroTimestamp(), 0).Format("2006-01-02_15-04-05")
 }
 
-//Get the formatted time at 12 o'clock of the day, the format is "2006-01-02_12-00-00"
+// Get the formatted time at 12 o'clock of the day, the format is "2006-01-02_12-00-00"
 func GetCurDayHalfTimeFormat() string {
 	return time.Unix(GetCurDayZeroTimestamp()+HalfOffset, 0).Format("2006-01-02_15-04-05")
 }
