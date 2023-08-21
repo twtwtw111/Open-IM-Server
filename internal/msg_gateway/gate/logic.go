@@ -228,7 +228,6 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 	sendMsgAllCount++
 	sendMsgAllCountLock.Unlock()
 	log.NewInfo(m.OperationID, "Ws call success to sendMsgReq start", m.MsgIncr, m.ReqIdentifier, m.SendID)
-
 	nReply := new(pbChat.SendMsgResp)
 	isPass, errCode, errMsg, pData := ws.argsValidate(m, constant.WSSendMsg, m.OperationID)
 	if isPass {
@@ -239,6 +238,7 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 			MsgData:     &data,
 		}
 		log.NewInfo(m.OperationID, "Ws call success to sendMsgReq middle", m.ReqIdentifier, m.SendID, m.MsgIncr, data.String())
+		log.NewInfo(m.OperationID, "GetGroupsInfo 消息体是", data.String())
 		etcdConn := getcdv3.GetDefaultConn(config.Config.Etcd.EtcdSchema, strings.Join(config.Config.Etcd.EtcdAddr, ","), config.Config.RpcRegisterName.OpenImMsgName, m.OperationID)
 		if etcdConn == nil {
 			errMsg := m.OperationID + "getcdv3.GetDefaultConn == nil"
@@ -249,7 +249,6 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 			return
 		}
 		//开始检查群成员是否有权限发生本次消息
-
 		if err := ws.checkGroupMessage(m.OperationID, data.SendID, data.GroupID, data.ContentType); err != nil {
 			nReply.ErrCode = 500
 			nReply.ErrMsg = err.Error()
@@ -309,11 +308,22 @@ func (ws *WServer) checkGroupMessage(operationID string, sendId string, groupId 
 			}
 			//检查图片消息
 			if info.Config.SendPic > 1 && contentType == constant.Picture {
-				log.NewInfo(operationID, "checkGroupMessage 群成员没有权限发生图片")
-				return errors.New("你没有权限发生图片")
+				log.NewInfo(operationID, "checkGroupMessage 群成员没有权限发送图片")
+				return errors.New("你没有权限发送图片")
+			}
+			//检查语音消息
+			if info.Config.SendVideo > 1 && contentType == constant.Video {
+				log.NewInfo(operationID, "checkGroupMessage 群成员没有权限发送视频")
+				return errors.New("你没有权限发送视频")
+			}
+			//检查图片消息
+			if info.Config.SendFile > 1 && contentType == constant.File {
+				log.NewInfo(operationID, "checkGroupMessage 群成员没有权限发送文件")
+				return errors.New("你没有权限发送文件")
 			}
 		}
 	}
+	log.NewInfo(operationID, "checkGroupMessage 校验成功")
 	return nil
 }
 func (ws *WServer) sendMsgResp(conn *UserConn, m *Req, pb *pbChat.SendMsgResp) {

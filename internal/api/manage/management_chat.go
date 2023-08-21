@@ -60,6 +60,7 @@ func newUserSendMsgReq(params *api.ManagementSendMsgReq) *pbChat.SendMsgReq {
 	case constant.AtText:
 		fallthrough
 	case constant.AdvancedRevoke:
+		log.NewInfo(params.OperationID, "撤回消息处理1")
 		utils.SetSwitchFromOptions(options, constant.IsUnreadCount, false)
 		newContent = utils.StructToJsonString(params.Content)
 	case constant.Revoke:
@@ -151,6 +152,7 @@ func ManagementSendMsg(c *gin.Context) {
 	case constant.Revoke:
 		data = RevokeElem{}
 	case constant.AdvancedRevoke:
+		log.NewInfo(params.OperationID, "撤回消息处理2")
 		data = MessageRevoked{}
 	case constant.OANotification:
 		data = OANotificationElem{}

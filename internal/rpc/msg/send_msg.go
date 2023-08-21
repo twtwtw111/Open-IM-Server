@@ -120,40 +120,6 @@ func groupIsMuted(groupID string) (bool, error) {
 	return false, nil
 }
 
-// 群权限控制
-func groupPermissionAllow(groupID string, field string) (bool, error) {
-	groupInfo, err := rocksCache.GetGroupInfoFromCache(groupID)
-	if err != nil {
-		return false, utils.Wrap(err, "GetGroupInfoFromCache failed")
-	}
-
-	switch field {
-	case "image":
-		if groupInfo.AllowSendImage == 1 {
-			return true, nil
-		}
-		return false, nil
-	case "video":
-		if groupInfo.AllowSendVideo == 1 {
-			return true, nil
-		}
-		return false, nil
-	case "revoke":
-		if groupInfo.AllowRevokeMsg == 1 {
-			return true, nil
-		}
-		return false, nil
-	case "nickname":
-		if groupInfo.AllowModifyNickname == 1 {
-			return true, nil
-		}
-		return false, nil
-	default:
-		return true, nil
-
-	}
-}
-
 func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, string, []string) {
 	switch data.MsgData.SessionType {
 	case constant.SingleChatType:
@@ -248,37 +214,20 @@ func (rpc *rpcChat) messageVerification(data *pbChat.SendMsgReq) (bool, int32, s
 		if isMute {
 			return false, 225, "group id muted", nil
 		}
-
-		//不允许发送非文字消息 不是群组 是群消息且消息类型不是文字,发送id 不等于群组id
-		if isAdmin != true && data.MsgData.ContentType != 101 {
-			return false, 226, "group is not allowed sending image,video or file", nil
-		}
-
 		return true, 0, "", userIDList
-
 	case constant.SuperGroupChatType:
 		groupInfo, err := rocksCache.GetGroupInfoFromCache(data.MsgData.GroupID)
 		if err != nil {
 			return false, 201, err.Error(), nil
 		}
-
+		log.Info(data.OperationID, "处理群消息", data)
 		if data.MsgData.ContentType == constant.AdvancedRevoke {
-
+			log.NewInfo(data.OperationID, "撤回消息处理3")
 			revokeMessage := new(MessageRevoked)
-
-			log.Debug(data.OperationID, "chehuixiaoxi", revokeMessage)
-
 			err := utils.JsonStringToStruct(string(data.MsgData.Content), revokeMessage)
 			if err != nil {
 				log.Error(data.OperationID, "json unmarshal err:", err.Error())
 				return false, 201, err.Error(), nil
-			}
-			log.Debug(data.OperationID, "revoke message is", *revokeMessage)
-
-			//如果这个人不是管理员。
-			_, isAdmin, err := userIsMuteAndIsAdminInGroup(data.MsgData.GroupID, data.MsgData.SendID)
-			if isAdmin == false {
-				return false, 201, "can not revoke msg", nil
 			}
 
 			if revokeMessage.RevokerID != revokeMessage.SourceMessageSendID {
@@ -519,7 +468,6 @@ func (rpc *rpcChat) SendMsg(_ context.Context, pb *pbChat.SendMsgReq) (*pbChat.S
 			}
 		case constant.MemberQuitNotification:
 			addUidList = append(addUidList, pb.MsgData.SendID)
-
 		default:
 		}
 		if len(addUidList) > 0 {

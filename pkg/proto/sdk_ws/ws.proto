@@ -1,5 +1,5 @@
 syntax = "proto3";
-import "wrappers.proto";
+import "Open-IM-Server/pkg/proto/sdk_ws/wrappers.proto";
 option go_package = "Open_IM/pkg/proto/sdk_ws;server_api_params";
 package server_api_params;
 
@@ -40,7 +40,6 @@ message GroupConfig {
   int32 prohibit = 8;
   int32 approveJoin = 9;
   int32 messageInterval = 10;
-
 }
 
 message GroupInfoForSet{
