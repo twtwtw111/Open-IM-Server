@@ -27,6 +27,7 @@ out-test
 tools/
 tmp/
 bin/
+bin-old/
 _output/
 
 ### OpenIM deploy ###
