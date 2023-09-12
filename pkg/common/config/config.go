@@ -26,6 +26,11 @@ type callBackConfig struct {
 	CallbackFailedContinue bool `yaml:"callbackFailedContinue"`
 }
 
+type SeverItem struct {
+	Name    string `yaml:"name"`
+	Address string `yaml:"address"`
+}
+
 type config struct {
 	ServerIP string `yaml:"serverip"`
 
@@ -33,10 +38,13 @@ type config struct {
 	ListenIP      string `yaml:"listenIP"`
 
 	ServerVersion string `yaml:"serverversion"`
-	Api           struct {
+
+	Api struct {
 		GinPort  []int  `yaml:"openImApiPort"`
 		ListenIP string `yaml:"listenIP"`
 	}
+	ServerList []SeverItem `yaml:"serverList"`
+
 	CmsApi struct {
 		GinPort  []int  `yaml:"openImCmsApiPort"`
 		ListenIP string `yaml:"listenIP"`
