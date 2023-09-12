@@ -227,9 +227,9 @@ func main() {
 		organizationGroup.POST("/get_user_in_organization", organization.GetUserInOrganization)
 	}
 
-	configGroup:=r.GET("/config")
+	configGroup := r.Group("/config")
 	{
-		configGroup.POST("/serve_list", clientInit.GetServeConfig)
+		configGroup.GET("/serve_list", clientInit.GetServeConfig)
 	}
 	initGroup := r.Group("/init")
 	{
