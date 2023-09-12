@@ -50,6 +50,14 @@ func GetServeConfig(c *gin.Context) {
 			"name":    "香港",
 		},
 		{
+			"address": "123.57.143.138",
+			"name":    "华北线路",
+		},
+		{
+			"address": "8.134.36.186",
+			"name":    "华南线路",
+		},
+		{
 			"address": "im.mallae.com",
 			"name":    "测试",
 		},
