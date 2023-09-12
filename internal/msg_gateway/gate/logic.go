@@ -307,7 +307,7 @@ func (ws *WServer) checkGroupMessage(operationID string, sendId string, groupId 
 		OpUserID:    sendId,
 		OperationID: operationID,
 		MemberList:  []string{sendId},
-		NoCache:     true,
+		NoCache:     false,
 	}
 	list, err := client.GetGroupMembersInfo(context.Background(), &memberListReq)
 	if err != nil {
