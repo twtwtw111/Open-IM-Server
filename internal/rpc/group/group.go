@@ -637,6 +637,8 @@ func (s *groupServer) GetGroupMemberList(ctx context.Context, req *pbGroup.GetGr
 		log.NewError(req.OperationID, "GetGroupMemberByGroupId failed,", req.GroupID, req.Filter, req.NextSeq, 30)
 		return &resp, nil
 	}
+	log.NewInfo(req.OperationID, "获取的群成员信息")
+	log.NewInfo(req.OperationID, memberList)
 
 	for _, v := range memberList {
 		var node open_im_sdk.GroupMemberFullInfo
