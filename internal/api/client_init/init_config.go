@@ -46,12 +46,12 @@ func SetClientInitConfig(c *gin.Context) {
 func GetServeConfig(c *gin.Context) {
 	list := [...]map[string]string{
 		{
-			"address": "123",
-			"name":    "香港服务器",
+			"address": "web.popos.cc",
+			"name":    "香港",
 		},
 		{
-			"address": "123",
-			"name":    "香港服务器",
+			"address": "im.mallae.com",
+			"name":    "测试",
 		},
 	}
 	c.JSON(http.StatusOK, list)
