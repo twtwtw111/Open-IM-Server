@@ -27,8 +27,8 @@ type callBackConfig struct {
 }
 
 type SeverItem struct {
-	Name    string `yaml:"name"`
-	Address string `yaml:"address"`
+	Name    string `yaml:"name" json:"name"`
+	Address string `yaml:"address" json:"address"`
 }
 
 type config struct {
@@ -43,7 +43,7 @@ type config struct {
 		GinPort  []int  `yaml:"openImApiPort"`
 		ListenIP string `yaml:"listenIP"`
 	}
-	ServerList []SeverItem `yaml:"serverList"`
+	ServerList []SeverItem `yaml:"serverList" json:"serverList"`
 
 	CmsApi struct {
 		GinPort  []int  `yaml:"openImCmsApiPort"`
