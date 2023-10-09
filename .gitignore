@@ -48,7 +48,7 @@ deploy/openim-sdk-core
 .idea.md
 .todo.md
 .note.md
-
+.idea/istics.xml
 # ==============================================================================
 # Created by https://www.toptal.com/developers/gitignore/api/go,git,vim,tags,test,emacs,backup,jetbrains
 # Edit at https://www.toptal.com/developers/gitignore?templates=go,git,vim,tags,test,emacs,backup,jetbrains
@@ -165,7 +165,7 @@ go.work
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
-.idea/**/usage.statistics.xml
+.idea/**/usage.stat
 .idea/**/dictionaries
 .idea/**/shelf
 
