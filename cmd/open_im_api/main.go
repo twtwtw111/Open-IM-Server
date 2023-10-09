@@ -227,10 +227,15 @@ func main() {
 		organizationGroup.POST("/get_user_in_organization", organization.GetUserInOrganization)
 	}
 
+	configGroup := r.Group("/config")
+	{
+		configGroup.GET("/serve_list", clientInit.GetServeConfig)
+	}
 	initGroup := r.Group("/init")
 	{
-		initGroup.POST("/set_client_config", clientInit.SetClientInitConfig)
+
 		initGroup.POST("/get_client_config", clientInit.GetClientInitConfig)
+		initGroup.POST("/get_serve_config", clientInit.GetServeConfig)
 	}
 	go getcdv3.RegisterConf()
 	go apiThird.MinioInit()

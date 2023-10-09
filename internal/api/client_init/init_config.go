@@ -2,6 +2,7 @@ package clientInit
 
 import (
 	api "Open_IM/pkg/base_info"
+	"Open_IM/pkg/common/config"
 	imdb "Open_IM/pkg/common/db/mysql_model/im_mysql_model"
 	"Open_IM/pkg/common/log"
 	"Open_IM/pkg/common/token_verify"
@@ -41,6 +42,29 @@ func SetClientInitConfig(c *gin.Context) {
 	}
 	log.NewInfo(req.OperationID, utils.GetSelfFuncName(), "resp: ", resp)
 	c.JSON(http.StatusOK, resp)
+}
+
+func GetServeConfig(c *gin.Context) {
+	serverList := config.Config.ServerList
+	//list := [...]map[string]string{
+	//	{
+	//		"address": "https://web.popos.cc",
+	//		"name":    "香港",
+	//	},
+	//	{
+	//		"address": "http://123.57.143.138",
+	//		"name":    "华北线路",
+	//	},
+	//	{
+	//		"address": "http://8.134.36.186",
+	//		"name":    "华南线路",
+	//	},
+	//	{
+	//		"address": "https://im.mallae.com",
+	//		"name":    "测试",
+	//	},
+	//}
+	c.JSON(http.StatusOK, serverList)
 }
 
 func GetClientInitConfig(c *gin.Context) {

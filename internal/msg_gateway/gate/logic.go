@@ -248,6 +248,7 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 			ws.sendMsgResp(conn, m, nReply)
 			return
 		}
+
 		//开始检查群成员是否有权限发生本次消息
 		if err := ws.checkGroupMessage(m.OperationID, data.SendID, data.GroupID, data.ContentType); err != nil {
 			nReply.ErrCode = 500
@@ -299,13 +300,34 @@ func (ws *WServer) checkGroupMessage(operationID string, sendId string, groupId 
 	if err != nil {
 		return errors.New("未知错误:" + err.Error())
 	}
+
+	log.NewInfo("开始请求群成员信息")
+	memberListReq := rpc.GetGroupMembersInfoReq{
+		GroupID:     groupId,
+		OpUserID:    sendId,
+		OperationID: operationID,
+		MemberList:  []string{sendId},
+		NoCache:     false,
+	}
+	list, err := client.GetGroupMembersInfo(context.Background(), &memberListReq)
+	if err != nil {
+		return errors.New("未知错误:" + err.Error())
+	}
+	if list == nil || list.MemberList == nil || len(list.MemberList) == 0 {
+		return errors.New("未知错误:member is not exist")
+	}
+	if list.MemberList[0].RoleLevel == constant.GroupAdmin {
+		log.NewInfo(operationID, "checkGroupMessage 你是管理员，可以发送")
+		return nil
+	}
 	if len(rpcResp.GroupInfoList) > 0 {
 		for _, info := range rpcResp.GroupInfoList {
 			//如果本次消息是群主发生的就不再检查
 			if info.CreatorUserID == sendId {
-				log.NewInfo(operationID, "checkGroupMessage 你是群主，该你牛")
+				log.NewInfo(operationID, "checkGroupMessage 你是群主，可以发送")
 				return nil
 			}
+
 			//检查图片消息
 			if info.Config.SendPic > 1 && contentType == constant.Picture {
 				log.NewInfo(operationID, "checkGroupMessage 群成员没有权限发送图片")
