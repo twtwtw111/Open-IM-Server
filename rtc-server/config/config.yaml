@@ -1,0 +1,41 @@
+port: 7880                  #不用修改，默认即可
+
+redis:
+  address: 127.0.0.1:16379  #和IM保持一致
+  db: 1                     #不用修改，默认即可
+  password: openIM123       #和IM保持一致
+
+rtc:
+  udp_port: 7882            #不用修改，默认即可，开放此外网udp端口
+  tcp_port: 7881            #不用修改，默认即可，开放此外网tcp端口
+  use_external_ip: false    #不用修改，默认即可
+
+keys:
+  APIGPW3gnFTzqHH: 23ztfSqsfQ8hKkHzHTl3Z4bvaxro0snjk5jwbp5p6Q3 #测试环境不修改，生产环境修改，生成方式scripts目录下执行./gen_key.sh
+
+room:
+  enable_remote_unmute: true              #会议系统，不用修改，默认即可
+  empty_timeout: 72000                    #如果视频会议的房间中人数为0，超过这个时间（秒）就自动关闭房间，不用修改，默认即可
+
+rpc:
+  port: 11300                             #不用修改 默认即可
+  live_url: wss://web.popos.cc/open_rtc           #用户能通过此ip:7880访问 或者配置nginx 类似wss://web.rentsoft.cn/open_rtc
+  address: 0.0.0.0                        #不用修改 默认即可
+  external_ip: 127.0.0.1                  #IM服务器能通过此ip:11300访问到的此服务器，不一定是外网ip，如果为空，则获取本机ip
+  register_name:
+    openImRealTimeCommName: RealTimeComm  #不用修改，默认即可
+    openImMsgName: Msg                    #不用修改，默认即可
+    openImUserName: User                  #不用修改，默认即可
+    openImAdminCmsName: AdminCMS          #不用修改，默认即可
+  etcd_schema: openim                     #不用修改，默认即可
+  etcd_addr: [ 127.0.0.1:2379 ]           #修改为IM是用的etcd
+
+file:
+  enable_file_save: false                 #是否保持音视频文件 如果为true则要配置s3，同时需要配置recorder.yaml
+  s3:
+    access_key: root                      #和IM保持一致
+    secret: openIM123                     #和IM保持一致
+    region: us-east-1                     #和IM保持一致
+    endpoint: http://127.0.0.1:10005      #和IM保持一致
+    bucket: video                         #需先手动创建
+  layout: single-speaker

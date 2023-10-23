@@ -1,0 +1,25 @@
+log_level: debug                                          #日志级别
+api_key: APIGPW3gnFTzqHH                                  #和config.yaml保持一致
+api_secret: 23ztfSqsfQ8hKkHzHTl3Z4bvaxro0snjk5jwbp5p6Q3   #和config.yaml保持一致
+ws_url: ws://127.0.0.1:7880                               #和config.yaml保持一致 需要连接到音视频服务的7880端口
+insecure: false
+
+template_base: http://172.20.40.77:9096 
+
+redis:
+  address: 127.0.0.1:16379  #和config.yaml保持一致
+  username:                 #和config.yaml保持一致
+  password: openIM123       #和config.yaml保持一致
+  db: 1                     #和config.yaml保持一致
+
+s3:
+  access_key: root                  #和config.yaml保持一致
+  secret: openIM123                 #和config.yaml保持一致
+  region: us-east-1                 #和config.yaml保持一致
+  endpoint: http://127.0.0.1:10005  #和config.yaml保持一致
+  bucket: video                     #和config.yaml保持一致
+
+cpu_cost:
+  room_composite_cpu_cost: 3.0      #默认即可
+  track_composite_cpu_cost: 2.0     #默认即可
+  track_cpu_cost: 1.0               #默认即可
