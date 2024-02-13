@@ -233,8 +233,8 @@ push:
       secretKey: dd893a961f2c140e9da9046f8158a23a
     enable: true # true or false (bool)
   jpns: #极光推送 在极光后台申请后，修改以下四项，必须修改12
-    appKey: 227f0a32644f568824d0d1d3
-    masterSecret: 61392a50f83bbaf99ec70e62
+    appKey: a729f1b51e3467d45502ec9f
+    masterSecret: ff73d845e0d77534d054e2e9
     pushUrl: https://api.jpush.cn/v3/push
     pushIntent:
     enable: false # true or false (bool)

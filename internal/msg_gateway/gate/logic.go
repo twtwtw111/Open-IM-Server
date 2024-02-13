@@ -19,12 +19,14 @@ import (
 	"errors"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/gorilla/websocket"
 	"google.golang.org/grpc"
 )
 
+// 解析处理消息
 func (ws *WServer) msgParse(conn *UserConn, binaryMsg []byte) {
 	b := bytes.NewBuffer(binaryMsg)
 	m := Req{}
@@ -238,7 +240,6 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 			MsgData:     &data,
 		}
 		log.NewInfo(m.OperationID, "Ws call success to sendMsgReq middle", m.ReqIdentifier, m.SendID, m.MsgIncr, data.String())
-		log.NewInfo(m.OperationID, "GetGroupsInfo 消息体是", data.String())
 		etcdConn := getcdv3.GetDefaultConn(config.Config.Etcd.EtcdSchema, strings.Join(config.Config.Etcd.EtcdAddr, ","), config.Config.RpcRegisterName.OpenImMsgName, m.OperationID)
 		if etcdConn == nil {
 			errMsg := m.OperationID + "getcdv3.GetDefaultConn == nil"
@@ -260,6 +261,9 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 
 		client := pbChat.NewMsgClient(etcdConn)
 		reply, err := client.SendMsg(context.Background(), &pbData)
+		//开始自动发消息
+		go ws.autoSendMessage(m.OperationID, &pbData, data.GroupID, data.ContentType, client)
+
 		if err != nil {
 			log.NewError(pbData.OperationID, "UserSendMsg err", err.Error())
 			nReply.ErrCode = 200
@@ -276,6 +280,32 @@ func (ws *WServer) sendMsgReq(conn *UserConn, m *Req) {
 		ws.sendMsgResp(conn, m, nReply)
 	}
 
+}
+
+// 自动机器人发送消息到前端
+func (ws *WServer) autoSendMessage(operationID string, sendReq *pbChat.SendMsgReq, groupId string, contentType int32, client pbChat.MsgClient) {
+
+	if groupId != "3400835714" || contentType != constant.Text {
+		return
+	}
+	//TODO 验证成功，可以在这里自定义逻辑
+	log.NewInfo(operationID, "开始自动发送消息")
+	time.Sleep(5 * time.Second)
+	//1645566253
+	sendReq.MsgData.SendID = "1645566253"
+	sendReq.MsgData.SenderFaceURL = "https://avatars.githubusercontent.com/u/25487913?s=40&v=4"
+	sendReq.MsgData.Content = []byte("你好呀")
+	sendReq.MsgData.ClientMsgID = sendReq.MsgData.ClientMsgID + "1"
+	sendReq.MsgData.ServerMsgID = sendReq.MsgData.ServerMsgID + "1"
+	sendReq.MsgData.OfflinePushInfo = nil
+	sendReq.MsgData.SenderNickname = "tin"
+	reply, err := client.SendMsg(context.Background(), sendReq)
+	if err != nil {
+		log.NewError(operationID, "自动发消息失败", err.Error())
+	}
+	log.NewInfo(operationID, "自动发送消息 回复", reply.String())
+	log.NewInfo(operationID, "自动发送消息 success")
+	return
 }
 
 /*

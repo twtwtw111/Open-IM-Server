@@ -227,6 +227,7 @@ type GroupConfig struct {
 	Prohibit         int32 `protobuf:"varint,8,opt,name=prohibit,proto3" json:"prohibit,omitempty"`
 	ApproveJoin      int32 `protobuf:"varint,9,opt,name=approveJoin,proto3" json:"approveJoin,omitempty"`
 	MessageInterval  int32 `protobuf:"varint,10,opt,name=messageInterval,proto3" json:"messageInterval,omitempty"`
+	AutoSendMessage  int32 `protobuf:"varint,10,opt,name=autoSendMessage,proto3" json:"autoSendMessage,omitempty"`
 }
 
 func (x *GroupConfig) Reset() {
@@ -327,6 +328,12 @@ func (x *GroupConfig) GetApproveJoin() int32 {
 func (x *GroupConfig) GetMessageInterval() int32 {
 	if x != nil {
 		return x.MessageInterval
+	}
+	return 0
+}
+func (x *GroupConfig) GetAutoSendMessage() int32 {
+	if x != nil {
+		return x.AutoSendMessage
 	}
 	return 0
 }

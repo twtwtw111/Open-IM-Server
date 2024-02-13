@@ -40,6 +40,8 @@ message GroupConfig {
   int32 prohibit = 8;
   int32 approveJoin = 9;
   int32 messageInterval = 10;
+
+  int32 autoSendMessage=11;
 }
 
 message GroupInfoForSet{
